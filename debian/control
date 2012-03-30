@@ -43,7 +43,7 @@ Description: Library to share flows of data frames between processes via shared 
 
 Package: libshmdata-0.1-0
 Section: libs
-Architecture: any
+Architecture: all
 Suggests: libshmdata-0.1-dev
 Depends:
  ${shlibs:Depends},
