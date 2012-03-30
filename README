@@ -1,0 +1,57 @@
+::
+
+         __            __     __      
+    ___ / /  __ _  ___/ /__ _/ /____ _
+   (_-</ _ \/  ' \/ _  / _ `/ __/ _ `/
+  /___/_//_/_/_/_/\_,_/\_,_/\__/\_,_/ 
+                                    
+shmdata
+=======
+Library to share flows of data frames between processes via shared memory. 
+shmdata can be compared to the JACK audio connection kit project or to the
+VideoJack project. shmdata, although providing a similar service for 
+any kind of data stream, does not provide (yet) reader and writer discovery. 
+Note that shmdata readers and writers can hot connect/disconnect/reconnect/... 
+and that a shared memory supports a single writer with multiple readers.
+
+Several libraries are provided: 
+
+* libshmdata for hot plugging between GStreamer pipelines (C library)
+* libshmdata-any for sharing custom data flows without including GStreamer headers (C library)
+* libshmdata-osg for receiving video written to a shared memory into an OpenSceneGraph texture (C++ library)
+
+License: LGPL.
+
+Project URL: http://codered.sat.qc.ca/redmine/projects/libshmdata
+
+This is an outcome of the Scenic research project at the SAT[Metalab]. http://www.sat.qc.ca
+
+Installation
+------------
+Here is how to build and install it on Debian GNU/Linux or Ubuntu::
+
+  $ sudo apt-get install automake bison build-essential flex libtool 
+  $ sudo apt-get install libglib-2.0-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev
+  $ sudo apt-get install libclutter-1.0-dev libopenscenegraph-dev
+  $ ./autogen.sh
+  $ ./configure
+  $ make
+  $ sudo make install
+  $ sudo ldconfig
+
+Build with the Point Cloud Library example
+------------------------------------------
+Here is how to build and install the PCL library headers on Ubuntu::
+
+  $ sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl
+  $ sudo apt-get update
+  $ sudo apt-get install libpcl-all
+
+Authors
+-------
+Written by:
+
+* Nicolas Bouillot (initial author)
+* Alexandre Quessy (help with packaging)
+
+
