@@ -25,7 +25,7 @@ Vcs-Browser: http://github.com/nicobou/ubuntu-shmdata
 
 Package: libshmdata-0.1-dev
 Section: libdevel
-Architecture: any
+Architecture: all
 Provides: libshmdata-dev
 Conflicts: libshmdata-dev
 Suggests: libshmdata-0.1-doc
@@ -43,7 +43,7 @@ Description: Library to share flows of data frames between processes via shared 
 
 Package: libshmdata-0.1-0
 Section: libs
-Architecture: all
+Architecture: any
 Suggests: libshmdata-0.1-dev
 Depends:
  ${shlibs:Depends},
