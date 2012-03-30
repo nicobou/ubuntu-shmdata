@@ -1,0 +1,73 @@
+Source: shmdata
+Priority: optional
+Section: libs
+Build-Depends:
+ automake,
+ autotools-dev,
+ bison,
+ cdbs,
+ debhelper (>= 7.0.0),
+ dh-buildinfo,
+ doxygen,
+ libclutter-1.0-dev,
+ libglew1.5-dev,
+ libglib2.0-dev,
+ libgstreamer0.10-dev,
+ libgstreamer-plugins-base0.10-dev,
+ libopenscenegraph-dev,
+ libtool,
+ pkg-config
+Homepage: https://github.com/sat-metalab/libshmdata
+Standards-Version: 3.9.2
+Maintainer: Nicolas Bouillot <nicolas.bouillot@gmail.com>
+Vcs-Git: git://github.com/sat-metalab/libshmdata.git
+Vcs-Browser: http://github.com/nicobou/ubuntu-shmdata
+
+Package: libshmdata-0.1-dev
+Section: libdevel
+Architecture: any
+Provides: libshmdata-dev
+Conflicts: libshmdata-dev
+Suggests: libshmdata-0.1-doc
+Depends: 
+ libshmdata-0.1-0 (= ${binary:Version}),
+ ${misc:Depends}
+Description: Library to share flows of data frames between processes via shared memory. 
+ shmdata can be compared to the JACK audio connection kit project or to the
+ VideoJack project. shmdata, although providing a similar service for 
+ any kind of data stream, does not provide (yet) reader and writer discovery. 
+ Note that shmdata readers and writers can hot connect/disconnect/reconnect/... 
+ and that a shared memory supports a single writer with multiple readers.
+ .
+ This package contains headers, documentation and static libraries.
+
+Package: libshmdata-0.1-0
+Section: libs
+Architecture: any
+Suggests: libshmdata-0.1-dev
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends}
+Description: Library to share flows of data frames between processes via shared memory. 
+ shmdata can be compared to the JACK audio connection kit project or to the
+ VideoJack project. shmdata, although providing a similar service for 
+ any kind of data stream, does not provide (yet) reader and writer discovery. 
+ Note that shmdata readers and writers can hot connect/disconnect/reconnect/... 
+ and that a shared memory supports a single writer with multiple readers.
+ .
+ This package contains the binary shared libraries.
+
+Package: libshmdata-0.1-doc
+Section: doc
+Architecture: all
+Recommends: libshmdata-0.1-dev
+Depends:
+ ${misc:Depends}
+Description: Library to share flows of data frames between processes via shared memory. 
+ shmdata can be compared to the JACK audio connection kit project or to the
+ VideoJack project. shmdata, although providing a similar service for 
+ any kind of data stream, does not provide (yet) reader and writer discovery. 
+ Note that shmdata readers and writers can hot connect/disconnect/reconnect/... 
+ and that a shared memory supports a single writer with multiple readers.
+ .
+ This package contains the documentation.
