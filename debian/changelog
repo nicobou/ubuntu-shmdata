@@ -1,3 +1,9 @@
+shmdata (0.4.0-2~precise~ppa1) precise; urgency=low
+
+  * updating package name
+
+ -- Nicolas Bouillot <nicolas.bouillot@gmail.com>  Fri, 06 Jul 2012 11:29:29 -0400
+
 shmdata (0.4.0-1~precise~ppa1) precise; urgency=low
 
   * packaging for precise

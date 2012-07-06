@@ -23,14 +23,14 @@ Maintainer: Nicolas Bouillot <nicolas.bouillot@gmail.com>
 Vcs-Git: git://github.com/sat-metalab/libshmdata.git
 Vcs-Browser: http://github.com/nicobou/ubuntu-shmdata
 
-Package: libshmdata-0.2-dev
+Package: libshmdata-0.4-dev
 Section: libdevel
 Architecture: all
 Provides: libshmdata-dev
 Conflicts: libshmdata-dev
-Suggests: libshmdata-0.2-doc
+Suggests: libshmdata-0.4-doc
 Depends: 
- libshmdata-0.2-0 (= ${binary:Version}),
+ libshmdata-0.4-0 (= ${binary:Version}),
  ${misc:Depends}
 Description: Library to share flows of data frames between processes via shared memory. 
  shmdata can be compared to the JACK audio connection kit project or to the
@@ -41,10 +41,10 @@ Description: Library to share flows of data frames between processes via shared 
  .
  This package contains headers, documentation and static libraries.
 
-Package: libshmdata-0.2-0
+Package: libshmdata-0.4-0
 Section: libs
 Architecture: any
-Suggests: libshmdata-0.2-dev
+Suggests: libshmdata-0.4-dev
 Depends:
  ${shlibs:Depends},
  ${misc:Depends}
@@ -57,10 +57,10 @@ Description: Library to share flows of data frames between processes via shared 
  .
  This package contains the binary shared libraries.
 
-Package: libshmdata-0.2-doc
+Package: libshmdata-0.4-doc
 Section: doc
 Architecture: all
-Recommends: libshmdata-0.2-dev
+Recommends: libshmdata-0.4-dev
 Depends:
  ${misc:Depends}
 Description: Library to share flows of data frames between processes via shared memory. 
