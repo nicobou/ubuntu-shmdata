@@ -37,14 +37,11 @@ host_triplet = @host@
 noinst_PROGRAMS = data_reader$(EXEEXT) data_writer$(EXEEXT) \
 	rtp_data_receiver$(EXEEXT) rtp_data_sender$(EXEEXT) \
 	video_reader$(EXEEXT) video_writer$(EXEEXT) $(am__EXEEXT_1) \
-	$(am__EXEEXT_2) $(am__EXEEXT_3)
+	$(am__EXEEXT_2)
 @BUILD_CLUTTER_EXAMPLE_TRUE@am__append_1 = \
 @BUILD_CLUTTER_EXAMPLE_TRUE@        clutter_reader
 
-@HAVE_OPENSCENEGRAPH_TRUE@am__append_2 = \
-@HAVE_OPENSCENEGRAPH_TRUE@        osg_reader
-
-@HAVE_PCL_TRUE@am__append_3 = \
+@HAVE_PCL_TRUE@am__append_2 = \
 @HAVE_PCL_TRUE@        pcd_reader \
 @HAVE_PCL_TRUE@        pcd_writer 
 
@@ -59,8 +56,7 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 @BUILD_CLUTTER_EXAMPLE_TRUE@am__EXEEXT_1 = clutter_reader$(EXEEXT)
-@HAVE_OPENSCENEGRAPH_TRUE@am__EXEEXT_2 = osg_reader$(EXEEXT)
-@HAVE_PCL_TRUE@am__EXEEXT_3 = pcd_reader$(EXEEXT) pcd_writer$(EXEEXT)
+@HAVE_PCL_TRUE@am__EXEEXT_2 = pcd_reader$(EXEEXT) pcd_writer$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
 am_clutter_reader_OBJECTS =  \
 	clutter_reader-clutter-actor-reader.$(OBJEXT)
@@ -76,10 +72,6 @@ data_reader_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_AP
 am_data_writer_OBJECTS = data-writer.$(OBJEXT)
 data_writer_OBJECTS = $(am_data_writer_OBJECTS)
 data_writer_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-am_osg_reader_OBJECTS = osg_reader-osg-reader.$(OBJEXT)
-osg_reader_OBJECTS = $(am_osg_reader_OBJECTS)
-osg_reader_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(top_builddir)/shmdata/libshmdata-osg-@LIBSHMDATA_API_VERSION@.la
 am_pcd_reader_OBJECTS = pcd_reader-pcd_reader.$(OBJEXT)
 pcd_reader_OBJECTS = $(am_pcd_reader_OBJECTS)
 pcd_reader_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
@@ -132,15 +124,15 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(clutter_reader_SOURCES) $(data_reader_SOURCES) \
-	$(data_writer_SOURCES) $(osg_reader_SOURCES) \
-	$(pcd_reader_SOURCES) $(pcd_writer_SOURCES) \
-	$(rtp_data_receiver_SOURCES) $(rtp_data_sender_SOURCES) \
-	$(video_reader_SOURCES) $(video_writer_SOURCES)
+	$(data_writer_SOURCES) $(pcd_reader_SOURCES) \
+	$(pcd_writer_SOURCES) $(rtp_data_receiver_SOURCES) \
+	$(rtp_data_sender_SOURCES) $(video_reader_SOURCES) \
+	$(video_writer_SOURCES)
 DIST_SOURCES = $(clutter_reader_SOURCES) $(data_reader_SOURCES) \
-	$(data_writer_SOURCES) $(osg_reader_SOURCES) \
-	$(pcd_reader_SOURCES) $(pcd_writer_SOURCES) \
-	$(rtp_data_receiver_SOURCES) $(rtp_data_sender_SOURCES) \
-	$(video_reader_SOURCES) $(video_writer_SOURCES)
+	$(data_writer_SOURCES) $(pcd_reader_SOURCES) \
+	$(pcd_writer_SOURCES) $(rtp_data_receiver_SOURCES) \
+	$(rtp_data_sender_SOURCES) $(video_reader_SOURCES) \
+	$(video_writer_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -307,9 +299,6 @@ rtp_data_sender_SOURCES = rtp-data-sender.c
 data_writer_LDADD = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
 data_writer_SOURCES = data-writer.c
 rtp_data_receiver_SOURCES = rtp-data-receiver.c
-osg_reader_CPPFLAGS = $(OPENSCENEGRAPH_CFLAGS) 
-osg_reader_LDADD = $(OPENSCENEGRAPH_LIBS) $(top_builddir)/shmdata/libshmdata-osg-@LIBSHMDATA_API_VERSION@.la 
-osg_reader_SOURCES = osg-reader.cpp
 pcd_reader_CPPFLAGS = -Wno-deprecated $(PCL_CFLAGS) -I /usr/include/vtk-5.8/ 
 #next line commented because of bugy pc file in libflann
 #pcd_reader_LDADD = $(PCL_LIBS) $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
@@ -335,9 +324,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign examples/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu examples/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign examples/Makefile
+	  $(AUTOMAKE) --gnu examples/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -374,9 +363,6 @@ data_reader$(EXEEXT): $(data_reader_OBJECTS) $(data_reader_DEPENDENCIES) $(EXTRA
 data_writer$(EXEEXT): $(data_writer_OBJECTS) $(data_writer_DEPENDENCIES) $(EXTRA_data_writer_DEPENDENCIES) 
 	@rm -f data_writer$(EXEEXT)
 	$(LINK) $(data_writer_OBJECTS) $(data_writer_LDADD) $(LIBS)
-osg_reader$(EXEEXT): $(osg_reader_OBJECTS) $(osg_reader_DEPENDENCIES) $(EXTRA_osg_reader_DEPENDENCIES) 
-	@rm -f osg_reader$(EXEEXT)
-	$(CXXLINK) $(osg_reader_OBJECTS) $(osg_reader_LDADD) $(LIBS)
 pcd_reader$(EXEEXT): $(pcd_reader_OBJECTS) $(pcd_reader_DEPENDENCIES) $(EXTRA_pcd_reader_DEPENDENCIES) 
 	@rm -f pcd_reader$(EXEEXT)
 	$(CXXLINK) $(pcd_reader_OBJECTS) $(pcd_reader_LDADD) $(LIBS)
@@ -405,7 +391,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clutter_reader-clutter-actor-reader.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data-reader.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data-writer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/osg_reader-osg-reader.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pcd_reader-pcd_reader.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pcd_writer-pcd_writer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtp-data-receiver.Po@am__quote@
@@ -488,20 +473,6 @@ rtp_data_sender-rtp-data-sender.obj: rtp-data-sender.c
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
-
-osg_reader-osg-reader.o: osg-reader.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(osg_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT osg_reader-osg-reader.o -MD -MP -MF $(DEPDIR)/osg_reader-osg-reader.Tpo -c -o osg_reader-osg-reader.o `test -f 'osg-reader.cpp' || echo '$(srcdir)/'`osg-reader.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/osg_reader-osg-reader.Tpo $(DEPDIR)/osg_reader-osg-reader.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='osg-reader.cpp' object='osg_reader-osg-reader.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(osg_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o osg_reader-osg-reader.o `test -f 'osg-reader.cpp' || echo '$(srcdir)/'`osg-reader.cpp
-
-osg_reader-osg-reader.obj: osg-reader.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(osg_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT osg_reader-osg-reader.obj -MD -MP -MF $(DEPDIR)/osg_reader-osg-reader.Tpo -c -o osg_reader-osg-reader.obj `if test -f 'osg-reader.cpp'; then $(CYGPATH_W) 'osg-reader.cpp'; else $(CYGPATH_W) '$(srcdir)/osg-reader.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/osg_reader-osg-reader.Tpo $(DEPDIR)/osg_reader-osg-reader.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='osg-reader.cpp' object='osg_reader-osg-reader.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(osg_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o osg_reader-osg-reader.obj `if test -f 'osg-reader.cpp'; then $(CYGPATH_W) 'osg-reader.cpp'; else $(CYGPATH_W) '$(srcdir)/osg-reader.cpp'; fi`
 
 pcd_reader-pcd_reader.o: pcd_reader.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcd_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pcd_reader-pcd_reader.o -MD -MP -MF $(DEPDIR)/pcd_reader-pcd_reader.Tpo -c -o pcd_reader-pcd_reader.o `test -f 'pcd_reader.cpp' || echo '$(srcdir)/'`pcd_reader.cpp
