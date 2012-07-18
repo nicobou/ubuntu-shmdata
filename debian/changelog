@@ -1,3 +1,9 @@
+shmdata (0.6.0-1~precise~ppa1) precise; urgency=low
+
+  * 0.6 version release
+
+ -- Nicolas Bouillot <nicolas.bouillot@gmail.com>  Wed, 18 Jul 2012 11:42:02 -0400
+
 shmdata (0.4.0-3~precise~ppa1) precise; urgency=low
 
   * fixing empty package issue
