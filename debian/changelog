@@ -1,3 +1,9 @@
+shmdata (0.6.2-1~precise~ppa1) precise; urgency=low
+
+  * New upstream release
+
+ -- Alexandre Quessy <alexandre@quessy.net>  Thu, 30 Aug 2012 11:46:49 -0400
+
 shmdata (0.6.0-1~precise~ppa1) precise; urgency=low
 
   * 0.6 version release
