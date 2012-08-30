@@ -20,8 +20,9 @@ Build-Depends:
 Homepage: https://github.com/sat-metalab/libshmdata
 Standards-Version: 3.9.2
 Maintainer: Nicolas Bouillot <nicolas.bouillot@gmail.com>
-Vcs-Git: git://github.com/sat-metalab/libshmdata.git
-Vcs-Browser: http://github.com/nicobou/ubuntu-shmdata
+Uploaders: Alexandre Quessy <alexandre@quessy.net>
+Vcs-Git: git://code.sat.qc.ca/ubuntu-packaging/ubuntu-shmdata.git
+Vcs-Browser: http://code.sat.qc.ca/redmine/projects/ubuntu-shmdata/repository
 
 Package: libshmdata-0.6-dev
 Section: libdevel
@@ -31,7 +32,7 @@ Replaces: libshmdata-dev,
  libshmdata-0.4-dev
 Conflicts: libshmdata-dev,
  libshmdata-0.4-dev
-Suggests: libshmdata-0.4-doc
+Suggests: libshmdata-0.6-doc
 Depends: 
  libshmdata-0.6-0 (= ${binary:Version}),
  ${misc:Depends}
