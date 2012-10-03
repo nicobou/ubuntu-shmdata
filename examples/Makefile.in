@@ -36,8 +36,8 @@ build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = data_reader$(EXEEXT) data_writer$(EXEEXT) \
 	rtp_data_receiver$(EXEEXT) rtp_data_sender$(EXEEXT) \
-	video_reader$(EXEEXT) video_writer$(EXEEXT) $(am__EXEEXT_1) \
-	$(am__EXEEXT_2)
+	video_reader$(EXEEXT) video_writer$(EXEEXT) \
+	video_writer_uri$(EXEEXT) $(am__EXEEXT_1) $(am__EXEEXT_2)
 @BUILD_CLUTTER_EXAMPLE_TRUE@am__append_1 = \
 @BUILD_CLUTTER_EXAMPLE_TRUE@        clutter_reader
 
@@ -101,6 +101,12 @@ video_writer_LDADD = $(LDADD)
 video_writer_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) \
 	$(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
+am_video_writer_uri_OBJECTS = video-writer-uri.$(OBJEXT)
+video_writer_uri_OBJECTS = $(am_video_writer_uri_OBJECTS)
+video_writer_uri_LDADD = $(LDADD)
+video_writer_uri_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) \
+	$(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -127,12 +133,12 @@ SOURCES = $(clutter_reader_SOURCES) $(data_reader_SOURCES) \
 	$(data_writer_SOURCES) $(pcd_reader_SOURCES) \
 	$(pcd_writer_SOURCES) $(rtp_data_receiver_SOURCES) \
 	$(rtp_data_sender_SOURCES) $(video_reader_SOURCES) \
-	$(video_writer_SOURCES)
+	$(video_writer_SOURCES) $(video_writer_uri_SOURCES)
 DIST_SOURCES = $(clutter_reader_SOURCES) $(data_reader_SOURCES) \
 	$(data_writer_SOURCES) $(pcd_reader_SOURCES) \
 	$(pcd_writer_SOURCES) $(rtp_data_receiver_SOURCES) \
 	$(rtp_data_sender_SOURCES) $(video_reader_SOURCES) \
-	$(video_writer_SOURCES)
+	$(video_writer_SOURCES) $(video_writer_uri_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -311,6 +317,7 @@ pcd_writer_LDADD = -lpcl_visualization -lpcl_io -lpcl_kdtree -lOpenNI -lpcl_octr
 pcd_writer_SOURCES = pcd_writer.cpp
 video_reader_SOURCES = video-reader.c
 video_writer_SOURCES = video-writer.c
+video_writer_uri_SOURCES = video-writer-uri.c
 all: all-am
 
 .SUFFIXES:
@@ -381,6 +388,9 @@ video_reader$(EXEEXT): $(video_reader_OBJECTS) $(video_reader_DEPENDENCIES) $(EX
 video_writer$(EXEEXT): $(video_writer_OBJECTS) $(video_writer_DEPENDENCIES) $(EXTRA_video_writer_DEPENDENCIES) 
 	@rm -f video_writer$(EXEEXT)
 	$(LINK) $(video_writer_OBJECTS) $(video_writer_LDADD) $(LIBS)
+video_writer_uri$(EXEEXT): $(video_writer_uri_OBJECTS) $(video_writer_uri_DEPENDENCIES) $(EXTRA_video_writer_uri_DEPENDENCIES) 
+	@rm -f video_writer_uri$(EXEEXT)
+	$(LINK) $(video_writer_uri_OBJECTS) $(video_writer_uri_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -396,6 +406,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtp-data-receiver.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtp_data_sender-rtp-data-sender.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/video-reader.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/video-writer-uri.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/video-writer.Po@am__quote@
 
 .c.o:
