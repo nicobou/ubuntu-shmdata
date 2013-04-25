@@ -1,6 +1,46 @@
 shmdata release notes
 ===================== 
 
+shmdata 0.6.6 (2012-04-25)
+---------------------------
+This is an official release in the 0.6 stable series.
+
+New features:
+
+* shmsrc~ and shmsink~ for multi-channel audio with puredata
+* more unit tests
+* option to run g_main_loop internaly or not (shmdata-any)
+* option to use absolute timestamp or not
+* port to osx
+* adding caps discovery for user
+
+Bugs fixed:
+
+* gstreamer state management improvement
+* fix bug when file exist and also detected by gfilemonitor
+
+shmdata 0.6.4 (2012-10-03)
+---------------------------
+This is an official release in the 0.6 stable series.
+
+Bugs fixed:
+
+* Fix OSG tearing with HD video
+* Add video-writer-uri example
+* Fix freeze when plug is called from uridecodebin on_pad_added handler
+
+
+shmdata 0.6.2 (2012-08-30)
+---------------------------
+This is an official release in the 0.6 stable series.
+
+Bugs fixed:
+
+* implementing a new interface for base reader, allowing to install or not the sync_handler
+* fixing bus sync handler singleton issue
+* calling close in video reader example
+
+
 shmdata 0.6.0 (2012-07-18)
 ---------------------------
 This is an official release in the 0.6 stable series.

@@ -35,11 +35,13 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
+@HAVE_OPENSCENEGRAPH_TRUE@am__append_1 = \
+@HAVE_OPENSCENEGRAPH_TRUE@    libshmdata-osg-@LIBSHMDATA_API_VERSION@.la 
+
 subdir = shmdata
-DIST_COMMON =  \
+DIST_COMMON = $(am__libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_include_HEADERS_DIST) \
 	$(libshmdata_@LIBSHMDATA_API_VERSION@_la_include_HEADERS) \
 	$(libshmdata_any_@LIBSHMDATA_API_VERSION@_la_include_HEADERS) \
-	$(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_include_HEADERS) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -102,11 +104,12 @@ libshmdata_any_@LIBSHMDATA_API_VERSION@_la_LINK = $(LIBTOOL) --tag=CC \
 	$(AM_CFLAGS) $(CFLAGS) \
 	$(libshmdata_any_@LIBSHMDATA_API_VERSION@_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
-libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_DEPENDENCIES =  \
-	libshmdata-@LIBSHMDATA_API_VERSION@.la
-am_libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_OBJECTS =  \
-	libshmdata_osg_@LIBSHMDATA_API_VERSION@_la-osg-reader.lo \
-	libshmdata_osg_@LIBSHMDATA_API_VERSION@_la-osg-reader_impl.lo
+@HAVE_OPENSCENEGRAPH_TRUE@libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_DEPENDENCIES = libshmdata-@LIBSHMDATA_API_VERSION@.la
+am__libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_SOURCES_DIST =  \
+	osg-reader.h osg-reader.cpp osg-reader_impl.cpp \
+	osg-reader_impl.h
+@HAVE_OPENSCENEGRAPH_TRUE@am_libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_OBJECTS = libshmdata_osg_@LIBSHMDATA_API_VERSION@_la-osg-reader.lo \
+@HAVE_OPENSCENEGRAPH_TRUE@	libshmdata_osg_@LIBSHMDATA_API_VERSION@_la-osg-reader_impl.lo
 libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_OBJECTS =  \
 	$(am_libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_OBJECTS)
 libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LINK = $(LIBTOOL) --tag=CXX \
@@ -115,6 +118,8 @@ libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LINK = $(LIBTOOL) --tag=CXX \
 	$(CXXFLAGS) \
 	$(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+@HAVE_OPENSCENEGRAPH_TRUE@am_libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_rpath =  \
+@HAVE_OPENSCENEGRAPH_TRUE@	-rpath $(libdir)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -142,7 +147,9 @@ SOURCES = $(libshmdata_@LIBSHMDATA_API_VERSION@_la_SOURCES) \
 	$(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_SOURCES)
 DIST_SOURCES = $(libshmdata_@LIBSHMDATA_API_VERSION@_la_SOURCES) \
 	$(libshmdata_any_@LIBSHMDATA_API_VERSION@_la_SOURCES) \
-	$(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_SOURCES)
+	$(am__libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_SOURCES_DIST)
+am__libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_include_HEADERS_DIST =  \
+	osg-reader.h
 HEADERS = $(libshmdata_@LIBSHMDATA_API_VERSION@_la_include_HEADERS) \
 	$(libshmdata_any_@LIBSHMDATA_API_VERSION@_la_include_HEADERS) \
 	$(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_include_HEADERS)
@@ -159,8 +166,6 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CLUTTER_CFLAGS = @CLUTTER_CFLAGS@
-CLUTTER_LIBS = @CLUTTER_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -182,11 +187,11 @@ EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 GIO_CFLAGS = @GIO_CFLAGS@
 GIO_LIBS = @GIO_LIBS@
-GLEW_CFLAGS = @GLEW_CFLAGS@
-GLEW_LIBS = @GLEW_LIBS@
 GREP = @GREP@
 GSTAPP_CFLAGS = @GSTAPP_CFLAGS@
 GSTAPP_LIBS = @GSTAPP_LIBS@
+GST_BASE_CFLAGS = @GST_BASE_CFLAGS@
+GST_BASE_LIBS = @GST_BASE_LIBS@
 GST_CFLAGS = @GST_CFLAGS@
 GST_LIBS = @GST_LIBS@
 INSTALL = @INSTALL@
@@ -198,6 +203,8 @@ LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
+LIBSAMPLERATE_CFLAGS = @LIBSAMPLERATE_CFLAGS@
+LIBSAMPLERATE_LIBS = @LIBSAMPLERATE_LIBS@
 LIBSHMDATA_API_VERSION = @LIBSHMDATA_API_VERSION@
 LIBSHMDATA_SO_VERSION = @LIBSHMDATA_SO_VERSION@
 LIBTOOL = @LIBTOOL@
@@ -223,8 +230,6 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
-PCL_CFLAGS = @PCL_CFLAGS@
-PCL_LIBS = @PCL_LIBS@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
@@ -232,6 +237,7 @@ RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
+SHMDATA_GST_PLUGIN_PATH = @SHMDATA_GST_PLUGIN_PATH@
 STRIP = @STRIP@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
@@ -297,16 +303,19 @@ AM_LIBS = \
     $(GST_LIBS) \
     $(GIO_LIBS)
 
-lib_LTLIBRARIES = \
-    libshmdata-@LIBSHMDATA_API_VERSION@.la \
-    libshmdata-osg-@LIBSHMDATA_API_VERSION@.la \
-    libshmdata-any-@LIBSHMDATA_API_VERSION@.la 
 
+# if HAVE_OSX
+#  AM_CFLAGS += -arch i386 -arch x86_64 -mmacosx-version-min=10.4 -ftree-vectorize  -fPIC 
+#  AM_LDFLAGS = -arch i386 -arch x86_64 -mmacosx-version-min=10.4 -bundle -undefined dynamic_lookup
+# endif
+lib_LTLIBRARIES = libshmdata-@LIBSHMDATA_API_VERSION@.la \
+	libshmdata-any-@LIBSHMDATA_API_VERSION@.la $(am__append_1)
 libshmdata_@LIBSHMDATA_API_VERSION@_la_SOURCES = \
     base-reader.c \
     base-writer.c
 
 libshmdata_@LIBSHMDATA_API_VERSION@_la_LDFLAGS = \
+    $(AM_LDFLAGS) \
     $(GIO_LIBS) \
     $(GST_LIBS) \
     -export-dynamic \
@@ -319,37 +328,39 @@ libshmdata_@LIBSHMDATA_API_VERSION@_la_include_HEADERS = \
     base-reader.h \
     base-writer.h
 
-libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_SOURCES = \
-    osg-reader.h \
-    osg-reader.cpp \
-    osg-reader_impl.cpp \
-    osg-reader_impl.h 
+@HAVE_OPENSCENEGRAPH_TRUE@libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_SOURCES = \
+@HAVE_OPENSCENEGRAPH_TRUE@    osg-reader.h \
+@HAVE_OPENSCENEGRAPH_TRUE@    osg-reader.cpp \
+@HAVE_OPENSCENEGRAPH_TRUE@    osg-reader_impl.cpp \
+@HAVE_OPENSCENEGRAPH_TRUE@    osg-reader_impl.h 
 
-libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_CXXFLAGS = \
-    $(AM_CFLAGS) \
-    $(GSTAPP_CFLAGS) \
-    $(OPENSCENEGRAPH_CFLAGS) 
+@HAVE_OPENSCENEGRAPH_TRUE@libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_CXXFLAGS = \
+@HAVE_OPENSCENEGRAPH_TRUE@    $(AM_CFLAGS) \
+@HAVE_OPENSCENEGRAPH_TRUE@    $(GSTAPP_CFLAGS) \
+@HAVE_OPENSCENEGRAPH_TRUE@    $(OPENSCENEGRAPH_CFLAGS) 
 
-libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LDFLAGS = \
-    $(GSTAPP_LIBS) \
-    $(OPENSCENEGRAPH_LIBS) \
-    -export-dynamic \
-    -version-info $(LIBSHMDATA_SO_VERSION) 
+@HAVE_OPENSCENEGRAPH_TRUE@libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LDFLAGS = \
+@HAVE_OPENSCENEGRAPH_TRUE@    $(AM_LDFLAGS) \
+@HAVE_OPENSCENEGRAPH_TRUE@    $(GSTAPP_LIBS) \
+@HAVE_OPENSCENEGRAPH_TRUE@    $(OPENSCENEGRAPH_LIBS) \
+@HAVE_OPENSCENEGRAPH_TRUE@    -export-dynamic \
+@HAVE_OPENSCENEGRAPH_TRUE@    -version-info $(LIBSHMDATA_SO_VERSION) 
 
-libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LIBADD = \
-    libshmdata-@LIBSHMDATA_API_VERSION@.la
+@HAVE_OPENSCENEGRAPH_TRUE@libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LIBADD = \
+@HAVE_OPENSCENEGRAPH_TRUE@    libshmdata-@LIBSHMDATA_API_VERSION@.la
 
-libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_includedir = \
-    $(includedir)/shmdata-$(LIBSHMDATA_API_VERSION)/shmdata
+@HAVE_OPENSCENEGRAPH_TRUE@libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_includedir = \
+@HAVE_OPENSCENEGRAPH_TRUE@    $(includedir)/shmdata-$(LIBSHMDATA_API_VERSION)/shmdata
 
-libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_include_HEADERS = \
-    osg-reader.h 
+@HAVE_OPENSCENEGRAPH_TRUE@libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_include_HEADERS = \
+@HAVE_OPENSCENEGRAPH_TRUE@    osg-reader.h 
 
 libshmdata_any_@LIBSHMDATA_API_VERSION@_la_SOURCES = \
     any-data-reader.c \
     any-data-writer.c
 
 libshmdata_any_@LIBSHMDATA_API_VERSION@_la_LDFLAGS = \
+    $(AM_LDFLAGS) \
     $(GSTAPP_LIBS) \
     -export-dynamic \
     -version-info $(LIBSHMDATA_SO_VERSION)
@@ -434,7 +445,7 @@ libshmdata-@LIBSHMDATA_API_VERSION@.la: $(libshmdata_@LIBSHMDATA_API_VERSION@_la
 libshmdata-any-@LIBSHMDATA_API_VERSION@.la: $(libshmdata_any_@LIBSHMDATA_API_VERSION@_la_OBJECTS) $(libshmdata_any_@LIBSHMDATA_API_VERSION@_la_DEPENDENCIES) $(EXTRA_libshmdata_any_@LIBSHMDATA_API_VERSION@_la_DEPENDENCIES) 
 	$(libshmdata_any_@LIBSHMDATA_API_VERSION@_la_LINK) -rpath $(libdir) $(libshmdata_any_@LIBSHMDATA_API_VERSION@_la_OBJECTS) $(libshmdata_any_@LIBSHMDATA_API_VERSION@_la_LIBADD) $(LIBS)
 libshmdata-osg-@LIBSHMDATA_API_VERSION@.la: $(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_OBJECTS) $(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_DEPENDENCIES) $(EXTRA_libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_DEPENDENCIES) 
-	$(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LINK) -rpath $(libdir) $(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_OBJECTS) $(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LIBADD) $(LIBS)
+	$(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LINK) $(am_libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_rpath) $(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_OBJECTS) $(libshmdata_osg_@LIBSHMDATA_API_VERSION@_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

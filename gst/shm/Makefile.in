@@ -14,6 +14,8 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -33,11 +35,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = check_read_then_write$(EXEEXT) \
-	check_read_and_write_onoff$(EXEEXT) check_write_read$(EXEEXT) \
-	check_write_and_read_onoff$(EXEEXT)
-subdir = tests
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+subdir = gst/shm
+DIST_COMMON = $(noinst_HEADERS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -46,30 +46,43 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_check_read_and_write_onoff_OBJECTS =  \
-	check_read_and_write_onoff.$(OBJEXT)
-check_read_and_write_onoff_OBJECTS =  \
-	$(am_check_read_and_write_onoff_OBJECTS)
-check_read_and_write_onoff_LDADD = $(LDADD)
-check_read_and_write_onoff_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-	$(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-am_check_read_then_write_OBJECTS = check_read_then_write.$(OBJEXT)
-check_read_then_write_OBJECTS = $(am_check_read_then_write_OBJECTS)
-check_read_then_write_LDADD = $(LDADD)
-check_read_then_write_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-	$(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-am_check_write_and_read_onoff_OBJECTS =  \
-	check_write_and_read_onoff.$(OBJEXT)
-check_write_and_read_onoff_OBJECTS =  \
-	$(am_check_write_and_read_onoff_OBJECTS)
-check_write_and_read_onoff_LDADD = $(LDADD)
-check_write_and_read_onoff_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-	$(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-am_check_write_read_OBJECTS = check_write_read.$(OBJEXT)
-check_write_read_OBJECTS = $(am_check_write_read_OBJECTS)
-check_write_read_LDADD = $(LDADD)
-check_write_read_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-	$(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
+am__install_max = 40
+am__nobase_strip_setup = \
+  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
+am__nobase_strip = \
+  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
+am__nobase_list = $(am__nobase_strip_setup); \
+  for p in $$list; do echo "$$p $$p"; done | \
+  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
+  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
+    if (++n[$$2] == $(am__install_max)) \
+      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
+    END { for (dir in files) print dir, files[dir] }'
+am__base_list = \
+  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
+  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+am__uninstall_files_from_dir = { \
+  test -z "$$files" \
+    || { test ! -d "$$dir" && test ! -f "$$dir" && test ! -r "$$dir"; } \
+    || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
+         $(am__cd) "$$dir" && rm -f $$files; }; \
+  }
+am__installdirs = "$(DESTDIR)$(plugindir)"
+LTLIBRARIES = $(plugin_LTLIBRARIES)
+libgstshm_la_DEPENDENCIES =
+am_libgstshm_la_OBJECTS = libgstshm_la-gstshm.lo \
+	libgstshm_la-gstshmsink.lo libgstshm_la-gstshmsrc.lo \
+	libgstshm_la-shmalloc.lo libgstshm_la-shmpipe.lo
+libgstshm_la_OBJECTS = $(am_libgstshm_la_OBJECTS)
+libgstshm_la_LINK = $(LIBTOOL) --tag=CC $(libgstshm_la_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libgstshm_la_CFLAGS) \
+	$(CFLAGS) $(libgstshm_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -83,18 +96,11 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(check_read_and_write_onoff_SOURCES) \
-	$(check_read_then_write_SOURCES) \
-	$(check_write_and_read_onoff_SOURCES) \
-	$(check_write_read_SOURCES)
-DIST_SOURCES = $(check_read_and_write_onoff_SOURCES) \
-	$(check_read_then_write_SOURCES) \
-	$(check_write_and_read_onoff_SOURCES) \
-	$(check_write_read_SOURCES)
+SOURCES = $(libgstshm_la_SOURCES)
+DIST_SOURCES = $(libgstshm_la_SOURCES)
+HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
-am__tty_colors = \
-red=; grn=; lgn=; blu=; std=
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -233,23 +239,42 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AM_CFLAGS = -I$(top_srcdir)
-LDADD = \
-    $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-    $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
+plugindir = \
+    $(SHMDATA_GST_PLUGIN_PATH)
 
-TESTS = $(check_PROGRAMS)
-check_write_read_SOURCES = \
-    check_write_read.c
+plugin_LTLIBRARIES = \
+    libgstshm.la 
 
-check_read_then_write_SOURCES = \
-    check_read_then_write.c
+libgstshm_la_SOURCES = \
+    gstshm.c \
+    gstshmsink.c \
+    gstshmsrc.c \
+    shmalloc.c \
+    shmpipe.c
 
-check_read_and_write_onoff_SOURCES = \
-    check_read_and_write_onoff.c
+libgstshm_la_CFLAGS = \
+    $(GST_CFLAGS) \
+    -DSHM_PIPE_USE_GLIB
 
-check_write_and_read_onoff_SOURCES = \
-    check_write_and_read_onoff.c
+@HAVE_OSX_FALSE@libgstshm_la_LIBADD = -lrt
+@HAVE_OSX_TRUE@libgstshm_la_LIBADD = 
+
+#from Manu's gst-plugin-bad fork 
+libgstshm_la_LDFLAGS = \
+    $(GST_BASE_LIBS) \
+    -module \
+    -avoid-version \
+    -export-symbols-regex '^[_]*gst_plugin_desc.*' \
+    -no-undefined
+
+libgstshm_la_LIBTOOLFLAGS = \
+    --tag=disable-static
+
+noinst_HEADERS = \
+    gstshmsink.h \
+    gstshmsrc.h \
+    shmalloc.h \
+    shmpipe.h
 
 all: all-am
 
@@ -264,9 +289,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu tests/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu gst/shm/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu tests/Makefile
+	  $(AUTOMAKE) --gnu gst/shm/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -285,27 +310,39 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+install-pluginLTLIBRARIES: $(plugin_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	test -z "$(plugindir)" || $(MKDIR_P) "$(DESTDIR)$(plugindir)"
+	@list='$(plugin_LTLIBRARIES)'; test -n "$(plugindir)" || list=; \
+	list2=; for p in $$list; do \
+	  if test -f $$p; then \
+	    list2="$$list2 $$p"; \
+	  else :; fi; \
+	done; \
+	test -z "$$list2" || { \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(plugindir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(plugindir)"; \
+	}
 
-clean-checkPROGRAMS:
-	@list='$(check_PROGRAMS)'; test -n "$$list" || exit 0; \
-	echo " rm -f" $$list; \
-	rm -f $$list || exit $$?; \
-	test -n "$(EXEEXT)" || exit 0; \
-	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
-	echo " rm -f" $$list; \
-	rm -f $$list
-check_read_and_write_onoff$(EXEEXT): $(check_read_and_write_onoff_OBJECTS) $(check_read_and_write_onoff_DEPENDENCIES) $(EXTRA_check_read_and_write_onoff_DEPENDENCIES) 
-	@rm -f check_read_and_write_onoff$(EXEEXT)
-	$(LINK) $(check_read_and_write_onoff_OBJECTS) $(check_read_and_write_onoff_LDADD) $(LIBS)
-check_read_then_write$(EXEEXT): $(check_read_then_write_OBJECTS) $(check_read_then_write_DEPENDENCIES) $(EXTRA_check_read_then_write_DEPENDENCIES) 
-	@rm -f check_read_then_write$(EXEEXT)
-	$(LINK) $(check_read_then_write_OBJECTS) $(check_read_then_write_LDADD) $(LIBS)
-check_write_and_read_onoff$(EXEEXT): $(check_write_and_read_onoff_OBJECTS) $(check_write_and_read_onoff_DEPENDENCIES) $(EXTRA_check_write_and_read_onoff_DEPENDENCIES) 
-	@rm -f check_write_and_read_onoff$(EXEEXT)
-	$(LINK) $(check_write_and_read_onoff_OBJECTS) $(check_write_and_read_onoff_LDADD) $(LIBS)
-check_write_read$(EXEEXT): $(check_write_read_OBJECTS) $(check_write_read_DEPENDENCIES) $(EXTRA_check_write_read_DEPENDENCIES) 
-	@rm -f check_write_read$(EXEEXT)
-	$(LINK) $(check_write_read_OBJECTS) $(check_write_read_LDADD) $(LIBS)
+uninstall-pluginLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@list='$(plugin_LTLIBRARIES)'; test -n "$(plugindir)" || list=; \
+	for p in $$list; do \
+	  $(am__strip_dir) \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(plugindir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(plugindir)/$$f"; \
+	done
+
+clean-pluginLTLIBRARIES:
+	-test -z "$(plugin_LTLIBRARIES)" || rm -f $(plugin_LTLIBRARIES)
+	@list='$(plugin_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
+libgstshm.la: $(libgstshm_la_OBJECTS) $(libgstshm_la_DEPENDENCIES) $(EXTRA_libgstshm_la_DEPENDENCIES) 
+	$(libgstshm_la_LINK) -rpath $(plugindir) $(libgstshm_la_OBJECTS) $(libgstshm_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -313,10 +350,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_read_and_write_onoff.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_read_then_write.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_write_and_read_onoff.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_write_read.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstshm_la-gstshm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstshm_la-gstshmsink.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstshm_la-gstshmsrc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstshm_la-shmalloc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libgstshm_la-shmpipe.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -341,6 +379,41 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
+
+libgstshm_la-gstshm.lo: gstshm.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -MT libgstshm_la-gstshm.lo -MD -MP -MF $(DEPDIR)/libgstshm_la-gstshm.Tpo -c -o libgstshm_la-gstshm.lo `test -f 'gstshm.c' || echo '$(srcdir)/'`gstshm.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libgstshm_la-gstshm.Tpo $(DEPDIR)/libgstshm_la-gstshm.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gstshm.c' object='libgstshm_la-gstshm.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -c -o libgstshm_la-gstshm.lo `test -f 'gstshm.c' || echo '$(srcdir)/'`gstshm.c
+
+libgstshm_la-gstshmsink.lo: gstshmsink.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -MT libgstshm_la-gstshmsink.lo -MD -MP -MF $(DEPDIR)/libgstshm_la-gstshmsink.Tpo -c -o libgstshm_la-gstshmsink.lo `test -f 'gstshmsink.c' || echo '$(srcdir)/'`gstshmsink.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libgstshm_la-gstshmsink.Tpo $(DEPDIR)/libgstshm_la-gstshmsink.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gstshmsink.c' object='libgstshm_la-gstshmsink.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -c -o libgstshm_la-gstshmsink.lo `test -f 'gstshmsink.c' || echo '$(srcdir)/'`gstshmsink.c
+
+libgstshm_la-gstshmsrc.lo: gstshmsrc.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -MT libgstshm_la-gstshmsrc.lo -MD -MP -MF $(DEPDIR)/libgstshm_la-gstshmsrc.Tpo -c -o libgstshm_la-gstshmsrc.lo `test -f 'gstshmsrc.c' || echo '$(srcdir)/'`gstshmsrc.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libgstshm_la-gstshmsrc.Tpo $(DEPDIR)/libgstshm_la-gstshmsrc.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='gstshmsrc.c' object='libgstshm_la-gstshmsrc.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -c -o libgstshm_la-gstshmsrc.lo `test -f 'gstshmsrc.c' || echo '$(srcdir)/'`gstshmsrc.c
+
+libgstshm_la-shmalloc.lo: shmalloc.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -MT libgstshm_la-shmalloc.lo -MD -MP -MF $(DEPDIR)/libgstshm_la-shmalloc.Tpo -c -o libgstshm_la-shmalloc.lo `test -f 'shmalloc.c' || echo '$(srcdir)/'`shmalloc.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libgstshm_la-shmalloc.Tpo $(DEPDIR)/libgstshm_la-shmalloc.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shmalloc.c' object='libgstshm_la-shmalloc.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -c -o libgstshm_la-shmalloc.lo `test -f 'shmalloc.c' || echo '$(srcdir)/'`shmalloc.c
+
+libgstshm_la-shmpipe.lo: shmpipe.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -MT libgstshm_la-shmpipe.lo -MD -MP -MF $(DEPDIR)/libgstshm_la-shmpipe.Tpo -c -o libgstshm_la-shmpipe.lo `test -f 'shmpipe.c' || echo '$(srcdir)/'`shmpipe.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libgstshm_la-shmpipe.Tpo $(DEPDIR)/libgstshm_la-shmpipe.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='shmpipe.c' object='libgstshm_la-shmpipe.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(libgstshm_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libgstshm_la_CFLAGS) $(CFLAGS) -c -o libgstshm_la-shmpipe.lo `test -f 'shmpipe.c' || echo '$(srcdir)/'`shmpipe.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -400,99 +473,6 @@ GTAGS:
 distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
-check-TESTS: $(TESTS)
-	@failed=0; all=0; xfail=0; xpass=0; skip=0; \
-	srcdir=$(srcdir); export srcdir; \
-	list=' $(TESTS) '; \
-	$(am__tty_colors); \
-	if test -n "$$list"; then \
-	  for tst in $$list; do \
-	    if test -f ./$$tst; then dir=./; \
-	    elif test -f $$tst; then dir=; \
-	    else dir="$(srcdir)/"; fi; \
-	    if $(TESTS_ENVIRONMENT) $${dir}$$tst; then \
-	      all=`expr $$all + 1`; \
-	      case " $(XFAIL_TESTS) " in \
-	      *[\ \	]$$tst[\ \	]*) \
-		xpass=`expr $$xpass + 1`; \
-		failed=`expr $$failed + 1`; \
-		col=$$red; res=XPASS; \
-	      ;; \
-	      *) \
-		col=$$grn; res=PASS; \
-	      ;; \
-	      esac; \
-	    elif test $$? -ne 77; then \
-	      all=`expr $$all + 1`; \
-	      case " $(XFAIL_TESTS) " in \
-	      *[\ \	]$$tst[\ \	]*) \
-		xfail=`expr $$xfail + 1`; \
-		col=$$lgn; res=XFAIL; \
-	      ;; \
-	      *) \
-		failed=`expr $$failed + 1`; \
-		col=$$red; res=FAIL; \
-	      ;; \
-	      esac; \
-	    else \
-	      skip=`expr $$skip + 1`; \
-	      col=$$blu; res=SKIP; \
-	    fi; \
-	    echo "$${col}$$res$${std}: $$tst"; \
-	  done; \
-	  if test "$$all" -eq 1; then \
-	    tests="test"; \
-	    All=""; \
-	  else \
-	    tests="tests"; \
-	    All="All "; \
-	  fi; \
-	  if test "$$failed" -eq 0; then \
-	    if test "$$xfail" -eq 0; then \
-	      banner="$$All$$all $$tests passed"; \
-	    else \
-	      if test "$$xfail" -eq 1; then failures=failure; else failures=failures; fi; \
-	      banner="$$All$$all $$tests behaved as expected ($$xfail expected $$failures)"; \
-	    fi; \
-	  else \
-	    if test "$$xpass" -eq 0; then \
-	      banner="$$failed of $$all $$tests failed"; \
-	    else \
-	      if test "$$xpass" -eq 1; then passes=pass; else passes=passes; fi; \
-	      banner="$$failed of $$all $$tests did not behave as expected ($$xpass unexpected $$passes)"; \
-	    fi; \
-	  fi; \
-	  dashes="$$banner"; \
-	  skipped=""; \
-	  if test "$$skip" -ne 0; then \
-	    if test "$$skip" -eq 1; then \
-	      skipped="($$skip test was not run)"; \
-	    else \
-	      skipped="($$skip tests were not run)"; \
-	    fi; \
-	    test `echo "$$skipped" | wc -c` -le `echo "$$banner" | wc -c` || \
-	      dashes="$$skipped"; \
-	  fi; \
-	  report=""; \
-	  if test "$$failed" -ne 0 && test -n "$(PACKAGE_BUGREPORT)"; then \
-	    report="Please report to $(PACKAGE_BUGREPORT)"; \
-	    test `echo "$$report" | wc -c` -le `echo "$$banner" | wc -c` || \
-	      dashes="$$report"; \
-	  fi; \
-	  dashes=`echo "$$dashes" | sed s/./=/g`; \
-	  if test "$$failed" -eq 0; then \
-	    col="$$grn"; \
-	  else \
-	    col="$$red"; \
-	  fi; \
-	  echo "$${col}$$dashes$${std}"; \
-	  echo "$${col}$$banner$${std}"; \
-	  test -z "$$skipped" || echo "$${col}$$skipped$${std}"; \
-	  test -z "$$report" || echo "$${col}$$report$${std}"; \
-	  echo "$${col}$$dashes$${std}"; \
-	  test "$$failed" -eq 0; \
-	else :; fi
-
 distdir: $(DISTFILES)
 	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
@@ -524,11 +504,12 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
-	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
-all-am: Makefile
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
+	for dir in "$(DESTDIR)$(plugindir)"; do \
+	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -561,7 +542,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-checkPROGRAMS clean-generic clean-libtool \
+clean-am: clean-generic clean-libtool clean-pluginLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -582,7 +563,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-pluginLTLIBRARIES
 
 install-dvi: install-dvi-am
 
@@ -628,25 +609,24 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am:
+uninstall-am: uninstall-pluginLTLIBRARIES
 
-.MAKE: check-am install-am install-strip
+.MAKE: install-am install-strip
 
-.PHONY: CTAGS GTAGS all all-am check check-TESTS check-am clean \
-	clean-checkPROGRAMS clean-generic clean-libtool ctags \
-	distclean distclean-compile distclean-generic \
-	distclean-libtool distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-pdf install-pdf-am \
+.PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
+	clean-libtool clean-pluginLTLIBRARIES ctags distclean \
+	distclean-compile distclean-generic distclean-libtool \
+	distclean-tags distdir dvi dvi-am html html-am info info-am \
+	install install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-pluginLTLIBRARIES \
 	install-ps install-ps-am install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am
+	tags uninstall uninstall-am uninstall-pluginLTLIBRARIES
 
-export GST_PLUGIN_PATH=$(top_builddir)/gst/shm:$GST_PLUGIN_PATH
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -36,15 +36,7 @@ build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = data_reader$(EXEEXT) data_writer$(EXEEXT) \
 	rtp_data_receiver$(EXEEXT) rtp_data_sender$(EXEEXT) \
-	video_reader$(EXEEXT) video_writer$(EXEEXT) $(am__EXEEXT_1) \
-	$(am__EXEEXT_2)
-@BUILD_CLUTTER_EXAMPLE_TRUE@am__append_1 = \
-@BUILD_CLUTTER_EXAMPLE_TRUE@        clutter_reader
-
-@HAVE_PCL_TRUE@am__append_2 = \
-@HAVE_PCL_TRUE@        pcd_reader \
-@HAVE_PCL_TRUE@        pcd_writer 
-
+	video_reader$(EXEEXT) video_writer$(EXEEXT)
 subdir = examples
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -55,38 +47,25 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-@BUILD_CLUTTER_EXAMPLE_TRUE@am__EXEEXT_1 = clutter_reader$(EXEEXT)
-@HAVE_PCL_TRUE@am__EXEEXT_2 = pcd_reader$(EXEEXT) pcd_writer$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
-am_clutter_reader_OBJECTS =  \
-	clutter_reader-clutter-actor-reader.$(OBJEXT)
-clutter_reader_OBJECTS = $(am_clutter_reader_OBJECTS)
-am__DEPENDENCIES_1 =
-am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
-clutter_reader_DEPENDENCIES = $(am__DEPENDENCIES_2) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 am_data_reader_OBJECTS = data-reader.$(OBJEXT)
 data_reader_OBJECTS = $(am_data_reader_OBJECTS)
 data_reader_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
 am_data_writer_OBJECTS = data-writer.$(OBJEXT)
 data_writer_OBJECTS = $(am_data_writer_OBJECTS)
 data_writer_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-am_pcd_reader_OBJECTS = pcd_reader-pcd_reader.$(OBJEXT)
-pcd_reader_OBJECTS = $(am_pcd_reader_OBJECTS)
-pcd_reader_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-am_pcd_writer_OBJECTS = pcd_writer-pcd_writer.$(OBJEXT)
-pcd_writer_OBJECTS = $(am_pcd_writer_OBJECTS)
-pcd_writer_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
 am_rtp_data_receiver_OBJECTS = rtp-data-receiver.$(OBJEXT)
 rtp_data_receiver_OBJECTS = $(am_rtp_data_receiver_OBJECTS)
 rtp_data_receiver_LDADD = $(LDADD)
+am__DEPENDENCIES_1 =
 rtp_data_receiver_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) \
 	$(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
 am_rtp_data_sender_OBJECTS =  \
 	rtp_data_sender-rtp-data-sender.$(OBJEXT)
 rtp_data_sender_OBJECTS = $(am_rtp_data_sender_OBJECTS)
+am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
 rtp_data_sender_DEPENDENCIES = $(am__DEPENDENCIES_2) \
 	$(am__DEPENDENCIES_1)
 am_video_reader_OBJECTS = video-reader.$(OBJEXT)
@@ -114,25 +93,12 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
-LTCXXCOMPILE = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
-CXXLD = $(CXX)
-CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
-SOURCES = $(clutter_reader_SOURCES) $(data_reader_SOURCES) \
-	$(data_writer_SOURCES) $(pcd_reader_SOURCES) \
-	$(pcd_writer_SOURCES) $(rtp_data_receiver_SOURCES) \
-	$(rtp_data_sender_SOURCES) $(video_reader_SOURCES) \
-	$(video_writer_SOURCES)
-DIST_SOURCES = $(clutter_reader_SOURCES) $(data_reader_SOURCES) \
-	$(data_writer_SOURCES) $(pcd_reader_SOURCES) \
-	$(pcd_writer_SOURCES) $(rtp_data_receiver_SOURCES) \
-	$(rtp_data_sender_SOURCES) $(video_reader_SOURCES) \
-	$(video_writer_SOURCES)
+SOURCES = $(data_reader_SOURCES) $(data_writer_SOURCES) \
+	$(rtp_data_receiver_SOURCES) $(rtp_data_sender_SOURCES) \
+	$(video_reader_SOURCES) $(video_writer_SOURCES)
+DIST_SOURCES = $(data_reader_SOURCES) $(data_writer_SOURCES) \
+	$(rtp_data_receiver_SOURCES) $(rtp_data_sender_SOURCES) \
+	$(video_reader_SOURCES) $(video_writer_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -146,8 +112,6 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CLUTTER_CFLAGS = @CLUTTER_CFLAGS@
-CLUTTER_LIBS = @CLUTTER_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -169,11 +133,11 @@ EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 GIO_CFLAGS = @GIO_CFLAGS@
 GIO_LIBS = @GIO_LIBS@
-GLEW_CFLAGS = @GLEW_CFLAGS@
-GLEW_LIBS = @GLEW_LIBS@
 GREP = @GREP@
 GSTAPP_CFLAGS = @GSTAPP_CFLAGS@
 GSTAPP_LIBS = @GSTAPP_LIBS@
+GST_BASE_CFLAGS = @GST_BASE_CFLAGS@
+GST_BASE_LIBS = @GST_BASE_LIBS@
 GST_CFLAGS = @GST_CFLAGS@
 GST_LIBS = @GST_LIBS@
 INSTALL = @INSTALL@
@@ -185,6 +149,8 @@ LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
+LIBSAMPLERATE_CFLAGS = @LIBSAMPLERATE_CFLAGS@
+LIBSAMPLERATE_LIBS = @LIBSAMPLERATE_LIBS@
 LIBSHMDATA_API_VERSION = @LIBSHMDATA_API_VERSION@
 LIBSHMDATA_SO_VERSION = @LIBSHMDATA_SO_VERSION@
 LIBTOOL = @LIBTOOL@
@@ -210,8 +176,6 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
-PCL_CFLAGS = @PCL_CFLAGS@
-PCL_LIBS = @PCL_LIBS@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
@@ -219,6 +183,7 @@ RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
+SHMDATA_GST_PLUGIN_PATH = @SHMDATA_GST_PLUGIN_PATH@
 STRIP = @STRIP@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
@@ -276,7 +241,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CXXFLAGS = \
     -I$(top_srcdir) \
-    $(GST_CFLAGS) $(GIO_CFLAGS)
+    $(GST_CFLAGS) \
+    $(GIO_CFLAGS)
 
 AM_CFLAGS = \
     $(AM_CXXFLAGS)
@@ -286,35 +252,20 @@ LDADD = \
     $(GIO_LIBS) \
     $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la 
 
-clutter_reader_CPPFLAGS = $(CLUTTER_CFLAGS) $(GLEW_CFLAGS)
-clutter_reader_LDADD = $(LDADD) $(CLUTTER_LIBS) $(GLEW_LIBS) 
-clutter_reader_SOURCES = clutter-actor-reader.c
-
-#data_reader_CPPFLAGS = $(GSTAPP_CFLAGS)
 data_reader_LDADD = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
 data_reader_SOURCES = data-reader.c
+data_writer_LDADD = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
+data_writer_SOURCES = data-writer.c
 rtp_data_sender_CPPFLAGS = $(GSTAPP_CFLAGS)
 rtp_data_sender_LDADD = $(LDADD) $(GSTAPP_LIBS) 
 rtp_data_sender_SOURCES = rtp-data-sender.c
-data_writer_LDADD = $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-data_writer_SOURCES = data-writer.c
 rtp_data_receiver_SOURCES = rtp-data-receiver.c
-pcd_reader_CPPFLAGS = -Wno-deprecated $(PCL_CFLAGS) -I /usr/include/vtk-5.8/ 
-#next line commented because of bugy pc file in libflann
-#pcd_reader_LDADD = $(PCL_LIBS) $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-pcd_reader_LDADD = -lpcl_visualization -lpcl_io -lpcl_kdtree -lOpenNI -lpcl_octree -lusb-1.0 -lflann_cpp -lpcl_common  $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-pcd_reader_SOURCES = pcd_reader.cpp
-pcd_writer_CPPFLAGS = $(PCL_CFLAGS) -I /usr/include/vtk-5.8/ 
-#next line commented because of bugy pc file in libflann
-#pcd_writer_LDADD = $(PCL_LIBS) $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-pcd_writer_LDADD = -lpcl_visualization -lpcl_io -lpcl_kdtree -lOpenNI -lpcl_octree -lusb-1.0 -lflann_cpp -lpcl_common $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-pcd_writer_SOURCES = pcd_writer.cpp
 video_reader_SOURCES = video-reader.c
 video_writer_SOURCES = video-writer.c
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .c .cpp .lo .o .obj
+.SUFFIXES: .c .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -354,21 +305,12 @@ clean-noinstPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
-clutter_reader$(EXEEXT): $(clutter_reader_OBJECTS) $(clutter_reader_DEPENDENCIES) $(EXTRA_clutter_reader_DEPENDENCIES) 
-	@rm -f clutter_reader$(EXEEXT)
-	$(LINK) $(clutter_reader_OBJECTS) $(clutter_reader_LDADD) $(LIBS)
 data_reader$(EXEEXT): $(data_reader_OBJECTS) $(data_reader_DEPENDENCIES) $(EXTRA_data_reader_DEPENDENCIES) 
 	@rm -f data_reader$(EXEEXT)
 	$(LINK) $(data_reader_OBJECTS) $(data_reader_LDADD) $(LIBS)
 data_writer$(EXEEXT): $(data_writer_OBJECTS) $(data_writer_DEPENDENCIES) $(EXTRA_data_writer_DEPENDENCIES) 
 	@rm -f data_writer$(EXEEXT)
 	$(LINK) $(data_writer_OBJECTS) $(data_writer_LDADD) $(LIBS)
-pcd_reader$(EXEEXT): $(pcd_reader_OBJECTS) $(pcd_reader_DEPENDENCIES) $(EXTRA_pcd_reader_DEPENDENCIES) 
-	@rm -f pcd_reader$(EXEEXT)
-	$(CXXLINK) $(pcd_reader_OBJECTS) $(pcd_reader_LDADD) $(LIBS)
-pcd_writer$(EXEEXT): $(pcd_writer_OBJECTS) $(pcd_writer_DEPENDENCIES) $(EXTRA_pcd_writer_DEPENDENCIES) 
-	@rm -f pcd_writer$(EXEEXT)
-	$(CXXLINK) $(pcd_writer_OBJECTS) $(pcd_writer_LDADD) $(LIBS)
 rtp_data_receiver$(EXEEXT): $(rtp_data_receiver_OBJECTS) $(rtp_data_receiver_DEPENDENCIES) $(EXTRA_rtp_data_receiver_DEPENDENCIES) 
 	@rm -f rtp_data_receiver$(EXEEXT)
 	$(LINK) $(rtp_data_receiver_OBJECTS) $(rtp_data_receiver_LDADD) $(LIBS)
@@ -388,11 +330,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/clutter_reader-clutter-actor-reader.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data-reader.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/data-writer.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pcd_reader-pcd_reader.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pcd_writer-pcd_writer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtp-data-receiver.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rtp_data_sender-rtp-data-sender.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/video-reader.Po@am__quote@
@@ -422,20 +361,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-clutter_reader-clutter-actor-reader.o: clutter-actor-reader.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(clutter_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT clutter_reader-clutter-actor-reader.o -MD -MP -MF $(DEPDIR)/clutter_reader-clutter-actor-reader.Tpo -c -o clutter_reader-clutter-actor-reader.o `test -f 'clutter-actor-reader.c' || echo '$(srcdir)/'`clutter-actor-reader.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/clutter_reader-clutter-actor-reader.Tpo $(DEPDIR)/clutter_reader-clutter-actor-reader.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='clutter-actor-reader.c' object='clutter_reader-clutter-actor-reader.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(clutter_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o clutter_reader-clutter-actor-reader.o `test -f 'clutter-actor-reader.c' || echo '$(srcdir)/'`clutter-actor-reader.c
-
-clutter_reader-clutter-actor-reader.obj: clutter-actor-reader.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(clutter_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT clutter_reader-clutter-actor-reader.obj -MD -MP -MF $(DEPDIR)/clutter_reader-clutter-actor-reader.Tpo -c -o clutter_reader-clutter-actor-reader.obj `if test -f 'clutter-actor-reader.c'; then $(CYGPATH_W) 'clutter-actor-reader.c'; else $(CYGPATH_W) '$(srcdir)/clutter-actor-reader.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/clutter_reader-clutter-actor-reader.Tpo $(DEPDIR)/clutter_reader-clutter-actor-reader.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='clutter-actor-reader.c' object='clutter_reader-clutter-actor-reader.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(clutter_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o clutter_reader-clutter-actor-reader.obj `if test -f 'clutter-actor-reader.c'; then $(CYGPATH_W) 'clutter-actor-reader.c'; else $(CYGPATH_W) '$(srcdir)/clutter-actor-reader.c'; fi`
-
 rtp_data_sender-rtp-data-sender.o: rtp-data-sender.c
 @am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(rtp_data_sender_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT rtp_data_sender-rtp-data-sender.o -MD -MP -MF $(DEPDIR)/rtp_data_sender-rtp-data-sender.Tpo -c -o rtp_data_sender-rtp-data-sender.o `test -f 'rtp-data-sender.c' || echo '$(srcdir)/'`rtp-data-sender.c
 @am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/rtp_data_sender-rtp-data-sender.Tpo $(DEPDIR)/rtp_data_sender-rtp-data-sender.Po
@@ -449,58 +374,6 @@ rtp_data_sender-rtp-data-sender.obj: rtp-data-sender.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='rtp-data-sender.c' object='rtp_data_sender-rtp-data-sender.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(rtp_data_sender_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o rtp_data_sender-rtp-data-sender.obj `if test -f 'rtp-data-sender.c'; then $(CYGPATH_W) 'rtp-data-sender.c'; else $(CYGPATH_W) '$(srcdir)/rtp-data-sender.c'; fi`
-
-.cpp.o:
-@am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
-@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
-@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ $<
-
-.cpp.obj:
-@am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
-@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
-@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-.cpp.lo:
-@am__fastdepCXX_TRUE@	depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
-@am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
-@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(LTCXXCOMPILE) -c -o $@ $<
-
-pcd_reader-pcd_reader.o: pcd_reader.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcd_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pcd_reader-pcd_reader.o -MD -MP -MF $(DEPDIR)/pcd_reader-pcd_reader.Tpo -c -o pcd_reader-pcd_reader.o `test -f 'pcd_reader.cpp' || echo '$(srcdir)/'`pcd_reader.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pcd_reader-pcd_reader.Tpo $(DEPDIR)/pcd_reader-pcd_reader.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pcd_reader.cpp' object='pcd_reader-pcd_reader.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcd_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pcd_reader-pcd_reader.o `test -f 'pcd_reader.cpp' || echo '$(srcdir)/'`pcd_reader.cpp
-
-pcd_reader-pcd_reader.obj: pcd_reader.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcd_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pcd_reader-pcd_reader.obj -MD -MP -MF $(DEPDIR)/pcd_reader-pcd_reader.Tpo -c -o pcd_reader-pcd_reader.obj `if test -f 'pcd_reader.cpp'; then $(CYGPATH_W) 'pcd_reader.cpp'; else $(CYGPATH_W) '$(srcdir)/pcd_reader.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pcd_reader-pcd_reader.Tpo $(DEPDIR)/pcd_reader-pcd_reader.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pcd_reader.cpp' object='pcd_reader-pcd_reader.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcd_reader_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pcd_reader-pcd_reader.obj `if test -f 'pcd_reader.cpp'; then $(CYGPATH_W) 'pcd_reader.cpp'; else $(CYGPATH_W) '$(srcdir)/pcd_reader.cpp'; fi`
-
-pcd_writer-pcd_writer.o: pcd_writer.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcd_writer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pcd_writer-pcd_writer.o -MD -MP -MF $(DEPDIR)/pcd_writer-pcd_writer.Tpo -c -o pcd_writer-pcd_writer.o `test -f 'pcd_writer.cpp' || echo '$(srcdir)/'`pcd_writer.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pcd_writer-pcd_writer.Tpo $(DEPDIR)/pcd_writer-pcd_writer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pcd_writer.cpp' object='pcd_writer-pcd_writer.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcd_writer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pcd_writer-pcd_writer.o `test -f 'pcd_writer.cpp' || echo '$(srcdir)/'`pcd_writer.cpp
-
-pcd_writer-pcd_writer.obj: pcd_writer.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcd_writer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT pcd_writer-pcd_writer.obj -MD -MP -MF $(DEPDIR)/pcd_writer-pcd_writer.Tpo -c -o pcd_writer-pcd_writer.obj `if test -f 'pcd_writer.cpp'; then $(CYGPATH_W) 'pcd_writer.cpp'; else $(CYGPATH_W) '$(srcdir)/pcd_writer.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/pcd_writer-pcd_writer.Tpo $(DEPDIR)/pcd_writer-pcd_writer.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='pcd_writer.cpp' object='pcd_writer-pcd_writer.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcd_writer_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o pcd_writer-pcd_writer.obj `if test -f 'pcd_writer.cpp'; then $(CYGPATH_W) 'pcd_writer.cpp'; else $(CYGPATH_W) '$(srcdir)/pcd_writer.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

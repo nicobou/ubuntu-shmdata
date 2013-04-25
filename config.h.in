@@ -12,6 +12,9 @@
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
+/* Apple Mac OS X operating system detected */
+#undef HAVE_OSX
+
 /* Define to 1 if you have the <signal.h> header file. */
 #undef HAVE_SIGNAL_H
 
@@ -63,6 +66,12 @@
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
+
+/* GStreamer plugin path for element built */
+#undef SHMDATA_GST_PLUGIN_PATH
+
+/* Path where the shm elements have been built */
+#undef SHMDATA_SHM_GST_PLUGIN_BUILD_PATH
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
