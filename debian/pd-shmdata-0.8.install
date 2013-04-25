@@ -1,1 +1,1 @@
-debian/tmp/usr/lib/pd/*.pd_linux
+debian/tmp/usr/lib/pd/extra/*.pd_linux
