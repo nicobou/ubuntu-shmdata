@@ -9,31 +9,31 @@ Build-Depends:
  debhelper (>= 7.0.0),
  dh-buildinfo,
  doxygen,
- libclutter-1.0-dev,
- libglew1.5-dev,
  libglib2.0-dev,
  libgstreamer0.10-dev,
  libgstreamer-plugins-base0.10-dev,
  libopenscenegraph-dev,
+ libsamplerate0-dev,
  libtool,
- pkg-config
-Homepage: https://github.com/sat-metalab/libshmdata
+ pkg-config,
+ puredata-dev
+Homepage: http://code.sat.qc.ca/redmine/projects/libshmdata
 Standards-Version: 3.9.2
 Maintainer: Nicolas Bouillot <nicolas.bouillot@gmail.com>
-Vcs-Git: git://github.com/sat-metalab/libshmdata.git
-Vcs-Browser: http://github.com/nicobou/ubuntu-shmdata
+Vcs-Git: git://code.sat.qc.ca/libshmdata.git
+Vcs-Browser: http://code.sat.qc.ca/redmine/projects/libshmdata/repository
 
-Package: libshmdata-0.6-dev
+Package: libshmdata-0.8-dev
 Section: libdevel
 Architecture: all
 Provides: libshmdata-dev
 Replaces: libshmdata-dev,
- libshmdata-0.4-dev
+ libshmdata-0.6-dev
 Conflicts: libshmdata-dev,
- libshmdata-0.4-dev
-Suggests: libshmdata-0.4-doc
+ libshmdata-0.6-dev
+Suggests: libshmdata-0.8-doc
 Depends: 
- libshmdata-0.6-0 (= ${binary:Version}),
+ libshmdata-0.8-0 (= ${binary:Version}),
  ${misc:Depends}
 Description: Library to share flows of data frames between processes via shared memory. 
  shmdata can be compared to the JACK audio connection kit project or to the
@@ -44,10 +44,10 @@ Description: Library to share flows of data frames between processes via shared 
  .
  This package contains headers, documentation and static libraries.
 
-Package: libshmdata-0.6-0
+Package: libshmdata-0.8-0
 Section: libs
 Architecture: any
-Suggests: libshmdata-0.6-dev
+Suggests: libshmdata-0.8-dev
 Depends:
  ${shlibs:Depends},
  ${misc:Depends}
@@ -60,10 +60,10 @@ Description: Library to share flows of data frames between processes via shared 
  .
  This package contains the binary shared libraries.
 
-Package: libshmdata-0.6-doc
+Package: libshmdata-0.8-doc
 Section: doc
 Architecture: all
-Recommends: libshmdata-0.6-dev
+Recommends: libshmdata-0.8-dev
 Depends:
  ${misc:Depends}
 Description: Library to share flows of data frames between processes via shared memory. 
@@ -74,3 +74,15 @@ Description: Library to share flows of data frames between processes via shared 
  and that a shared memory supports a single writer with multiple readers.
  .
  This package contains the documentation.
+
+Package: pd-shmdata-0.8
+Section: libs
+Architecture: any
+Suggests: libshmdata-0.8-dev
+Depends:
+ libshmdata-0.8-0 (= ${binary:Version}),
+ ${shlibs:Depends},
+ ${misc:Depends}
+Description: puredata external for sharing audio streams through the use of libshmdata.
+ .
+ This package contains the binary shared libraries.
