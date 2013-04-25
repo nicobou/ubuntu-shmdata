@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Nicolas Bouillot (http://www.nicolasbouillot.net)
+ * Copyright (C) 2012-2013 Nicolas Bouillot (http://www.nicolasbouillot.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -91,6 +91,11 @@ namespace shmdata
      * @return the pointer to the osg::Texture2D instance where video is written
      */
     osg::Texture2D * getTexture ();
+
+    /** 
+     * Updates the texture with the latest image from the shared memory
+     */
+     void updateImage();
 
      ~OsgReader ();
 
