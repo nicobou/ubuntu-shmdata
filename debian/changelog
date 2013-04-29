@@ -1,3 +1,9 @@
+shmdata (0.8.0-1~quantal~ppa1) quantal; urgency=low
+
+  * 0.8 version release
+
+ -- Nicolas Bouillot <nicolas.bouillot@gmail.com>  Mon, 29 Apr 2013 09:55:07 -0400
+
 shmdata (0.8.0-1~precise~ppa1) precise; urgency=low
 
   * 0.8 version release
