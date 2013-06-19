@@ -1,3 +1,9 @@
+shmdata (0.8.4-1~raring~ppa1) raring; urgency=low
+
+  * 0.8 version release
+
+ -- Nicolas Bouillot <nicolas.bouillot@gmail.com>  Wed, 19 Jun 2013 15:34:52 -0400
+
 shmdata (0.8.4-1~precise~ppa1) precise; urgency=low
 
   * 0.8 version release
