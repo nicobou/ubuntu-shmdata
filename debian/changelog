@@ -1,3 +1,9 @@
+shmdata (0.8.4-1~quantal~ppa1) quantal; urgency=low
+
+  * Package for quantal
+
+ -- Michal Seta <mis@artengine.ca>  Mon, 08 Jul 2013 09:43:19 -0400
+
 shmdata (0.8.4-1~raring~ppa1) raring; urgency=low
 
   * 0.8 version release
