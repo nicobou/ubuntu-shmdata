@@ -1,3 +1,9 @@
+shmdata (0.8.8-1~saucy~ppa1) saucy; urgency=low
+
+  * Package for saucy
+
+ -- Nicolas Bouillot <nicolas.bouillot@gmail.com> Tue, 21 Jan 2014 10:44:43 -0500
+
 shmdata (0.8.8-1~raring~ppa1) raring; urgency=low
 
   * Package for raring
