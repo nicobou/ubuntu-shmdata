@@ -1,3 +1,9 @@
+shmdata (0.8.8-1~precise~ppa1) precise; urgency=low
+
+  * Package for precise
+
+ -- Nicolas Bouillot <nicolas.bouillot@gmail.com>  Tue, 21 Jan 2014 10:32:19 -0500
+
 shmdata (0.8.4-1~quantal~ppa1) quantal; urgency=low
 
   * Package for quantal
