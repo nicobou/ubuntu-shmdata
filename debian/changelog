@@ -1,3 +1,9 @@
+shmdata (0.8.12-1~saucy~ppa1) saucy; urgency=low
+
+  * Build for saucy
+
+ -- Nicolas Bouillot <nicolas.bouillot@gmail.com> Thu, 27 Feb 2014 13:52:14 -0500
+
 shmdata (0.8.12-1~raring~ppa1) raring; urgency=low
 
   * Build for raring
