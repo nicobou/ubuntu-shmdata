@@ -2,7 +2,7 @@ shmdata (0.8.14-1~trusty~ppa1) trusty; urgency=low
 
   * Build for trusty
 
- -- Nicolas Bouillot <nicolas.bouillot@gmail.com> Mon, 04 Aug 2014 14:25:12 -0400
+ -- Nicolas Bouillot <nicolas.bouillot@gmail.com>  Mon, 04 Aug 2014 14:25:12 -0400
 
 shmdata (0.8.12-1~saucy~ppa1) saucy; urgency=low
 
