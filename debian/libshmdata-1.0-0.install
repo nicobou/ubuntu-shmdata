@@ -1,2 +1,3 @@
+debian/tmp/usr/bin/sdflow
 debian/tmp/usr/lib/lib*.so*
 debian/tmp/usr/lib/python3/dist-packages/pyshmdata.so*

@@ -1,3 +1,9 @@
+shmdata (1.0.2-2~trusty~ppa1) trusty; urgency=low
+
+  * Build for trusty with gstreamer elements and sdflow
+
+ -- Nicolas Bouillot <nicolas.bouillot@gmail.com>  Mon, 17 Aug 2015 14:04:51 -0400
+
 shmdata (1.0.2-1~trusty~ppa1) trusty; urgency=low
 
   * Build for trusty

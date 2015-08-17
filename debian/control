@@ -20,6 +20,20 @@ Maintainer: Nicolas Bouillot <nicolas.bouillot@gmail.com>
 Vcs-Git: git://code.sat.qc.ca/libshmdata.git
 Vcs-Browser: http://code.sat.qc.ca/redmine/projects/libshmdata/repository
 
+Package: gstreamer1.0-shmdata-1.0
+Section: libs
+Architecture: all
+Provides: gstreamer1.0-shmdata
+Replaces: gstreamer1.0-shmdata
+Conflicts: gstreamer1.0-shmdata
+Depends: 
+ libshmdata-1.0-0 (= ${binary:Version}),
+ ${misc:Depends}
+Description: libshmdata plugin for gstreamer
+ Shmdata is a library for sharing flows of data frames between processes via shared memory. shmdata can be compared to the JACK audio connection kit project or to the VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). Note that shmdata followers and writers can hot connect/disconnect/reconnect/... and that a shared memory supports a single writer with multiple readers.
+ .
+ This package contains the binary shared libraries.
+
 Package: libshmdata-1.0-dev
 Section: libdevel
 Architecture: all
