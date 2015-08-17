@@ -9,80 +9,61 @@ Build-Depends:
  debhelper (>= 7.0.0),
  dh-buildinfo,
  doxygen,
- libglib2.0-dev,
- libgstreamer0.10-dev,
- libgstreamer-plugins-base0.10-dev,
- libopenscenegraph-dev,
- libsamplerate0-dev,
+ libgstreamer1.0-dev,
+ libgstreamer-plugins-base1.0-dev,
+ python3-dev,
  libtool,
- pkg-config,
- puredata-dev
+ pkg-config
 Homepage: http://code.sat.qc.ca/redmine/projects/libshmdata
 Standards-Version: 3.9.2
 Maintainer: Nicolas Bouillot <nicolas.bouillot@gmail.com>
 Vcs-Git: git://code.sat.qc.ca/libshmdata.git
 Vcs-Browser: http://code.sat.qc.ca/redmine/projects/libshmdata/repository
 
-Package: libshmdata-0.8-dev
+Package: libshmdata-1.0-dev
 Section: libdevel
 Architecture: all
 Provides: libshmdata-dev
-Replaces: libshmdata-dev,
- libshmdata-0.6-dev
-Conflicts: libshmdata-dev,
- libshmdata-0.6-dev
-Suggests: libshmdata-0.8-doc
+Replaces: libshmdata-dev
+Conflicts: libshmdata-dev
+Suggests: libshmdata-1.0-doc
 Depends: 
- libshmdata-0.8-0 (= ${binary:Version}),
+ libshmdata-1.0-0 (= ${binary:Version}),
  ${misc:Depends}
 Description: Library to share flows of data frames between processes via shared memory. 
- shmdata can be compared to the JACK audio connection kit project or to the
- VideoJack project. shmdata, however, does not provide yet reader and 
- writer discovery. 
- Note that shmdata readers and writers can hot connect/disconnect/reconnect/... 
- and that a shared memory supports a single writer with multiple readers.
+shmdata can be compared to the JACK audio connection kit project or to the
+VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). 
+Note that shmdata followers and writers can hot connect/disconnect/reconnect/... 
+and that a shared memory supports a single writer with multiple readers.
  .
  This package contains headers, documentation and static libraries.
 
-Package: libshmdata-0.8-0
+Package: libshmdata-1.0-0
 Section: libs
 Architecture: any
-Suggests: libshmdata-0.8-dev
+Suggests: libshmdata-1.0-dev
 Depends:
  ${shlibs:Depends},
  ${misc:Depends}
 Description: Library to share flows of data frames between processes via shared memory. 
- shmdata can be compared to the JACK audio connection kit project or to the
- VideoJack project. shmdata, however, does not provide yet reader and 
- writer discovery. 
- Note that shmdata readers and writers can hot connect/disconnect/reconnect/... 
- and that a shared memory supports a single writer with multiple readers.
+shmdata can be compared to the JACK audio connection kit project or to the
+VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). 
+Note that shmdata followers and writers can hot connect/disconnect/reconnect/... 
+and that a shared memory supports a single writer with multiple readers.
  .
  This package contains the binary shared libraries.
 
-Package: libshmdata-0.8-doc
+Package: libshmdata-1.0-doc
 Section: doc
 Architecture: all
-Recommends: libshmdata-0.8-dev
+Recommends: libshmdata-1.0-dev
 Depends:
  ${misc:Depends}
 Description: Library to share flows of data frames between processes via shared memory. 
- shmdata can be compared to the JACK audio connection kit project or to the
- VideoJack project. shmdata, however, does not provide yet reader and 
- writer discovery. 
- Note that shmdata readers and writers can hot connect/disconnect/reconnect/... 
- and that a shared memory supports a single writer with multiple readers.
+shmdata can be compared to the JACK audio connection kit project or to the
+VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). 
+Note that shmdata followers and writers can hot connect/disconnect/reconnect/... 
+and that a shared memory supports a single writer with multiple readers.
  .
  This package contains the documentation.
 
-Package: pd-shmdata-0.8
-Section: libs
-Architecture: any
-Suggests: libshmdata-0.8-dev
-Depends:
- libshmdata-0.8-0 (= ${binary:Version}),
- ${shlibs:Depends},
- ${misc:Depends}
-Description: puredata external for sharing audio streams through the use of libshmdata.
- .
- This package contains the binary shared libraries.

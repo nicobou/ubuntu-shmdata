@@ -4,7 +4,7 @@ on  Wed, 28 Mar 2012 10:30:44 -0400
 It was downloaded from: <http://github.com/sat-metalab/libshmdata>
 
 Files: shmdata/*.c shmdata/*.cpp
-Copyright: 2012, Nicolas Bouillot and Alexandre Quessy
+Copyright: 2015, Nicolas Bouillot
 License: /usr/share/common-licenses/LGPL-3
 
 The packaging of libshmdata is released under the GNU General Public License,
