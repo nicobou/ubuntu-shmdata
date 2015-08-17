@@ -77,9 +77,11 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-check_PROGRAMS = check_read_then_write$(EXEEXT) \
-	check_read_and_write_onoff$(EXEEXT) check_write_read$(EXEEXT) \
-	check_write_and_read_onoff$(EXEEXT)
+check_PROGRAMS = check-c-wrapper$(EXEEXT) check-file-monitor$(EXEEXT) \
+	check-follower$(EXEEXT) check-shmdata$(EXEEXT) \
+	check-shmdata-stress$(EXEEXT) check-sysv-sem$(EXEEXT) \
+	check-sysv-shm$(EXEEXT) check-unix-socket$(EXEEXT) \
+	check-writer-follower$(EXEEXT)
 subdir = tests
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/depcomp $(top_srcdir)/test-driver
@@ -91,34 +93,46 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_check_read_and_write_onoff_OBJECTS =  \
-	check_read_and_write_onoff.$(OBJEXT)
-check_read_and_write_onoff_OBJECTS =  \
-	$(am_check_read_and_write_onoff_OBJECTS)
-check_read_and_write_onoff_LDADD = $(LDADD)
-check_read_and_write_onoff_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-	$(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
+am_check_c_wrapper_OBJECTS = check-c-wrapper.$(OBJEXT)
+check_c_wrapper_OBJECTS = $(am_check_c_wrapper_OBJECTS)
+check_c_wrapper_LDADD = $(LDADD)
+check_c_wrapper_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-am_check_read_then_write_OBJECTS = check_read_then_write.$(OBJEXT)
-check_read_then_write_OBJECTS = $(am_check_read_then_write_OBJECTS)
-check_read_then_write_LDADD = $(LDADD)
-check_read_then_write_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-	$(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-am_check_write_and_read_onoff_OBJECTS =  \
-	check_write_and_read_onoff.$(OBJEXT)
-check_write_and_read_onoff_OBJECTS =  \
-	$(am_check_write_and_read_onoff_OBJECTS)
-check_write_and_read_onoff_LDADD = $(LDADD)
-check_write_and_read_onoff_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-	$(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
-am_check_write_read_OBJECTS = check_write_read.$(OBJEXT)
-check_write_read_OBJECTS = $(am_check_write_read_OBJECTS)
-check_write_read_LDADD = $(LDADD)
-check_write_read_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-	$(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
+am_check_file_monitor_OBJECTS = check-file-monitor.$(OBJEXT)
+check_file_monitor_OBJECTS = $(am_check_file_monitor_OBJECTS)
+check_file_monitor_LDADD = $(LDADD)
+check_file_monitor_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
+am_check_follower_OBJECTS = check-follower.$(OBJEXT)
+check_follower_OBJECTS = $(am_check_follower_OBJECTS)
+check_follower_LDADD = $(LDADD)
+check_follower_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
+am_check_shmdata_OBJECTS = check-shmdata.$(OBJEXT)
+check_shmdata_OBJECTS = $(am_check_shmdata_OBJECTS)
+check_shmdata_LDADD = $(LDADD)
+check_shmdata_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
+am_check_shmdata_stress_OBJECTS = check-shmdata-stress.$(OBJEXT)
+check_shmdata_stress_OBJECTS = $(am_check_shmdata_stress_OBJECTS)
+check_shmdata_stress_LDADD = $(LDADD)
+check_shmdata_stress_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
+am_check_sysv_sem_OBJECTS = check-sysv-sem.$(OBJEXT)
+check_sysv_sem_OBJECTS = $(am_check_sysv_sem_OBJECTS)
+check_sysv_sem_LDADD = $(LDADD)
+check_sysv_sem_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
+am_check_sysv_shm_OBJECTS = check-sysv-shm.$(OBJEXT)
+check_sysv_shm_OBJECTS = $(am_check_sysv_shm_OBJECTS)
+check_sysv_shm_LDADD = $(LDADD)
+check_sysv_shm_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
+am_check_unix_socket_OBJECTS = check-unix-socket.$(OBJEXT)
+check_unix_socket_OBJECTS = $(am_check_unix_socket_OBJECTS)
+check_unix_socket_LDADD = $(LDADD)
+check_unix_socket_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
+am_check_writer_follower_OBJECTS = check-writer-follower.$(OBJEXT)
+check_writer_follower_OBJECTS = $(am_check_writer_follower_OBJECTS)
+check_writer_follower_LDADD = $(LDADD)
+check_writer_follower_DEPENDENCIES = $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -135,32 +149,34 @@ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) \
 	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-	$(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_@AM_V@)
-am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
-am__v_CC_0 = @echo "  CC      " $@;
-am__v_CC_1 = 
-CCLD = $(CC)
-LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_@AM_V@)
-am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
-am__v_CCLD_0 = @echo "  CCLD    " $@;
-am__v_CCLD_1 = 
-SOURCES = $(check_read_and_write_onoff_SOURCES) \
-	$(check_read_then_write_SOURCES) \
-	$(check_write_and_read_onoff_SOURCES) \
-	$(check_write_read_SOURCES)
-DIST_SOURCES = $(check_read_and_write_onoff_SOURCES) \
-	$(check_read_then_write_SOURCES) \
-	$(check_write_and_read_onoff_SOURCES) \
-	$(check_write_read_SOURCES)
+	$(AM_CXXFLAGS) $(CXXFLAGS)
+AM_V_CXX = $(am__v_CXX_@AM_V@)
+am__v_CXX_ = $(am__v_CXX_@AM_DEFAULT_V@)
+am__v_CXX_0 = @echo "  CXX     " $@;
+am__v_CXX_1 = 
+CXXLD = $(CXX)
+CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
+am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
+am__v_CXXLD_0 = @echo "  CXXLD   " $@;
+am__v_CXXLD_1 = 
+SOURCES = $(check_c_wrapper_SOURCES) $(check_file_monitor_SOURCES) \
+	$(check_follower_SOURCES) $(check_shmdata_SOURCES) \
+	$(check_shmdata_stress_SOURCES) $(check_sysv_sem_SOURCES) \
+	$(check_sysv_shm_SOURCES) $(check_unix_socket_SOURCES) \
+	$(check_writer_follower_SOURCES)
+DIST_SOURCES = $(check_c_wrapper_SOURCES) \
+	$(check_file_monitor_SOURCES) $(check_follower_SOURCES) \
+	$(check_shmdata_SOURCES) $(check_shmdata_stress_SOURCES) \
+	$(check_sysv_sem_SOURCES) $(check_sysv_shm_SOURCES) \
+	$(check_unix_socket_SOURCES) $(check_writer_follower_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -420,15 +436,13 @@ ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
-GIO_CFLAGS = @GIO_CFLAGS@
-GIO_LIBS = @GIO_LIBS@
 GREP = @GREP@
-GSTAPP_CFLAGS = @GSTAPP_CFLAGS@
-GSTAPP_LIBS = @GSTAPP_LIBS@
-GST_BASE_CFLAGS = @GST_BASE_CFLAGS@
-GST_BASE_LIBS = @GST_BASE_LIBS@
 GST_CFLAGS = @GST_CFLAGS@
 GST_LIBS = @GST_LIBS@
+GST_PLUGIN_DIR = @GST_PLUGIN_DIR@
+GST_PLUGIN_LDFLAGS = @GST_PLUGIN_LDFLAGS@
+HAVE_PKGCONFIG = @HAVE_PKGCONFIG@
+HAVE_PYTHON3 = @HAVE_PYTHON3@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -438,8 +452,6 @@ LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
-LIBSAMPLERATE_CFLAGS = @LIBSAMPLERATE_CFLAGS@
-LIBSAMPLERATE_LIBS = @LIBSAMPLERATE_LIBS@
 LIBSHMDATA_API_VERSION = @LIBSHMDATA_API_VERSION@
 LIBSHMDATA_SO_VERSION = @LIBSHMDATA_SO_VERSION@
 LIBTOOL = @LIBTOOL@
@@ -453,8 +465,6 @@ NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
 OBJEXT = @OBJEXT@
-OPENSCENEGRAPH_CFLAGS = @OPENSCENEGRAPH_CFLAGS@
-OPENSCENEGRAPH_LIBS = @OPENSCENEGRAPH_LIBS@
 OTOOL = @OTOOL@
 OTOOL64 = @OTOOL64@
 PACKAGE = @PACKAGE@
@@ -472,7 +482,6 @@ RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
-SHMDATA_GST_PLUGIN_PATH = @SHMDATA_GST_PLUGIN_PATH@
 STRIP = @STRIP@
 VERSION = @VERSION@
 abs_builddir = @abs_builddir@
@@ -528,28 +537,44 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AM_CFLAGS = -I$(top_srcdir)
+AM_CXXFLAGS = \
+    -I$(top_srcdir) 
+
 LDADD = \
-    $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la \
-    $(top_builddir)/shmdata/libshmdata-any-@LIBSHMDATA_API_VERSION@.la
+    $(top_builddir)/shmdata/libshmdata-@LIBSHMDATA_API_VERSION@.la 
 
 TESTS = $(check_PROGRAMS)
-check_write_read_SOURCES = \
-    check_write_read.c
+check_c_wrapper_SOURCES = \
+    check-c-wrapper.cpp
 
-check_read_then_write_SOURCES = \
-    check_read_then_write.c
+check_file_monitor_SOURCES = \
+    check-file-monitor.cpp
 
-check_read_and_write_onoff_SOURCES = \
-    check_read_and_write_onoff.c
+check_follower_SOURCES = \
+    check-follower.cpp
 
-check_write_and_read_onoff_SOURCES = \
-    check_write_and_read_onoff.c
+check_shmdata_SOURCES = \
+    check-shmdata.cpp
+
+check_shmdata_stress_SOURCES = \
+    check-shmdata-stress.cpp
+
+check_sysv_sem_SOURCES = \
+    check-sysv-sem.cpp
+
+check_sysv_shm_SOURCES = \
+    check-sysv-shm.cpp
+
+check_unix_socket_SOURCES = \
+    check-unix-socket.cpp
+
+check_writer_follower_SOURCES = \
+    check-writer-follower.cpp
 
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .c .lo .log .o .obj .test .test$(EXEEXT) .trs
+.SUFFIXES: .cpp .lo .log .o .obj .test .test$(EXEEXT) .trs
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -590,21 +615,41 @@ clean-checkPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
-check_read_and_write_onoff$(EXEEXT): $(check_read_and_write_onoff_OBJECTS) $(check_read_and_write_onoff_DEPENDENCIES) $(EXTRA_check_read_and_write_onoff_DEPENDENCIES) 
-	@rm -f check_read_and_write_onoff$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(check_read_and_write_onoff_OBJECTS) $(check_read_and_write_onoff_LDADD) $(LIBS)
+check-c-wrapper$(EXEEXT): $(check_c_wrapper_OBJECTS) $(check_c_wrapper_DEPENDENCIES) $(EXTRA_check_c_wrapper_DEPENDENCIES) 
+	@rm -f check-c-wrapper$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(check_c_wrapper_OBJECTS) $(check_c_wrapper_LDADD) $(LIBS)
 
-check_read_then_write$(EXEEXT): $(check_read_then_write_OBJECTS) $(check_read_then_write_DEPENDENCIES) $(EXTRA_check_read_then_write_DEPENDENCIES) 
-	@rm -f check_read_then_write$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(check_read_then_write_OBJECTS) $(check_read_then_write_LDADD) $(LIBS)
+check-file-monitor$(EXEEXT): $(check_file_monitor_OBJECTS) $(check_file_monitor_DEPENDENCIES) $(EXTRA_check_file_monitor_DEPENDENCIES) 
+	@rm -f check-file-monitor$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(check_file_monitor_OBJECTS) $(check_file_monitor_LDADD) $(LIBS)
 
-check_write_and_read_onoff$(EXEEXT): $(check_write_and_read_onoff_OBJECTS) $(check_write_and_read_onoff_DEPENDENCIES) $(EXTRA_check_write_and_read_onoff_DEPENDENCIES) 
-	@rm -f check_write_and_read_onoff$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(check_write_and_read_onoff_OBJECTS) $(check_write_and_read_onoff_LDADD) $(LIBS)
+check-follower$(EXEEXT): $(check_follower_OBJECTS) $(check_follower_DEPENDENCIES) $(EXTRA_check_follower_DEPENDENCIES) 
+	@rm -f check-follower$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(check_follower_OBJECTS) $(check_follower_LDADD) $(LIBS)
 
-check_write_read$(EXEEXT): $(check_write_read_OBJECTS) $(check_write_read_DEPENDENCIES) $(EXTRA_check_write_read_DEPENDENCIES) 
-	@rm -f check_write_read$(EXEEXT)
-	$(AM_V_CCLD)$(LINK) $(check_write_read_OBJECTS) $(check_write_read_LDADD) $(LIBS)
+check-shmdata$(EXEEXT): $(check_shmdata_OBJECTS) $(check_shmdata_DEPENDENCIES) $(EXTRA_check_shmdata_DEPENDENCIES) 
+	@rm -f check-shmdata$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(check_shmdata_OBJECTS) $(check_shmdata_LDADD) $(LIBS)
+
+check-shmdata-stress$(EXEEXT): $(check_shmdata_stress_OBJECTS) $(check_shmdata_stress_DEPENDENCIES) $(EXTRA_check_shmdata_stress_DEPENDENCIES) 
+	@rm -f check-shmdata-stress$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(check_shmdata_stress_OBJECTS) $(check_shmdata_stress_LDADD) $(LIBS)
+
+check-sysv-sem$(EXEEXT): $(check_sysv_sem_OBJECTS) $(check_sysv_sem_DEPENDENCIES) $(EXTRA_check_sysv_sem_DEPENDENCIES) 
+	@rm -f check-sysv-sem$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(check_sysv_sem_OBJECTS) $(check_sysv_sem_LDADD) $(LIBS)
+
+check-sysv-shm$(EXEEXT): $(check_sysv_shm_OBJECTS) $(check_sysv_shm_DEPENDENCIES) $(EXTRA_check_sysv_shm_DEPENDENCIES) 
+	@rm -f check-sysv-shm$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(check_sysv_shm_OBJECTS) $(check_sysv_shm_LDADD) $(LIBS)
+
+check-unix-socket$(EXEEXT): $(check_unix_socket_OBJECTS) $(check_unix_socket_DEPENDENCIES) $(EXTRA_check_unix_socket_DEPENDENCIES) 
+	@rm -f check-unix-socket$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(check_unix_socket_OBJECTS) $(check_unix_socket_LDADD) $(LIBS)
+
+check-writer-follower$(EXEEXT): $(check_writer_follower_OBJECTS) $(check_writer_follower_DEPENDENCIES) $(EXTRA_check_writer_follower_DEPENDENCIES) 
+	@rm -f check-writer-follower$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(check_writer_follower_OBJECTS) $(check_writer_follower_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -612,34 +657,39 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_read_and_write_onoff.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_read_then_write.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_write_and_read_onoff.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check_write_read.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check-c-wrapper.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check-file-monitor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check-follower.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check-shmdata-stress.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check-shmdata.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check-sysv-sem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check-sysv-shm.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check-unix-socket.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/check-writer-follower.Po@am__quote@
 
-.c.o:
-@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
-@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ $<
+.cpp.o:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
 
-.c.obj:
-@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
-@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+.cpp.obj:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
 
-.c.lo:
-@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
-@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
+.cpp.lo:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -840,30 +890,65 @@ recheck: all $(check_PROGRAMS)
 	        am__force_recheck=am--force-recheck \
 	        TEST_LOGS="$$log_list"; \
 	exit $$?
-check_read_then_write.log: check_read_then_write$(EXEEXT)
-	@p='check_read_then_write$(EXEEXT)'; \
-	b='check_read_then_write'; \
+check-c-wrapper.log: check-c-wrapper$(EXEEXT)
+	@p='check-c-wrapper$(EXEEXT)'; \
+	b='check-c-wrapper'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-check_read_and_write_onoff.log: check_read_and_write_onoff$(EXEEXT)
-	@p='check_read_and_write_onoff$(EXEEXT)'; \
-	b='check_read_and_write_onoff'; \
+check-file-monitor.log: check-file-monitor$(EXEEXT)
+	@p='check-file-monitor$(EXEEXT)'; \
+	b='check-file-monitor'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-check_write_read.log: check_write_read$(EXEEXT)
-	@p='check_write_read$(EXEEXT)'; \
-	b='check_write_read'; \
+check-follower.log: check-follower$(EXEEXT)
+	@p='check-follower$(EXEEXT)'; \
+	b='check-follower'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
-check_write_and_read_onoff.log: check_write_and_read_onoff$(EXEEXT)
-	@p='check_write_and_read_onoff$(EXEEXT)'; \
-	b='check_write_and_read_onoff'; \
+check-shmdata.log: check-shmdata$(EXEEXT)
+	@p='check-shmdata$(EXEEXT)'; \
+	b='check-shmdata'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+check-shmdata-stress.log: check-shmdata-stress$(EXEEXT)
+	@p='check-shmdata-stress$(EXEEXT)'; \
+	b='check-shmdata-stress'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+check-sysv-sem.log: check-sysv-sem$(EXEEXT)
+	@p='check-sysv-sem$(EXEEXT)'; \
+	b='check-sysv-sem'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+check-sysv-shm.log: check-sysv-shm$(EXEEXT)
+	@p='check-sysv-shm$(EXEEXT)'; \
+	b='check-sysv-shm'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+check-unix-socket.log: check-unix-socket$(EXEEXT)
+	@p='check-unix-socket$(EXEEXT)'; \
+	b='check-unix-socket'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+check-writer-follower.log: check-writer-follower$(EXEEXT)
+	@p='check-writer-follower$(EXEEXT)'; \
+	b='check-writer-follower'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -1039,7 +1124,6 @@ uninstall-am:
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	recheck tags tags-am uninstall uninstall-am
 
-export GST_PLUGIN_PATH=$(top_builddir)/gst/shm:$GST_PLUGIN_PATH
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
