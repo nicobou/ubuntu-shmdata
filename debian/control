@@ -30,11 +30,7 @@ Suggests: libshmdata-1.0-doc
 Depends: 
  libshmdata-1.0-0 (= ${binary:Version}),
  ${misc:Depends}
-Description: Library to share flows of data frames between processes via shared memory. 
-shmdata can be compared to the JACK audio connection kit project or to the
-VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). 
-Note that shmdata followers and writers can hot connect/disconnect/reconnect/... 
-and that a shared memory supports a single writer with multiple readers.
+Description: Library to share flows of data frames between processes via shared memory. shmdata can be compared to the JACK audio connection kit project or to the VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). Note that shmdata followers and writers can hot connect/disconnect/reconnect/... and that a shared memory supports a single writer with multiple readers.
  .
  This package contains headers, documentation and static libraries.
 
@@ -45,11 +41,7 @@ Suggests: libshmdata-1.0-dev
 Depends:
  ${shlibs:Depends},
  ${misc:Depends}
-Description: Library to share flows of data frames between processes via shared memory. 
-shmdata can be compared to the JACK audio connection kit project or to the
-VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). 
-Note that shmdata followers and writers can hot connect/disconnect/reconnect/... 
-and that a shared memory supports a single writer with multiple readers.
+Description: Library to share flows of data frames between processes via shared memory. shmdata can be compared to the JACK audio connection kit project or to the VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). Note that shmdata followers and writers can hot connect/disconnect/reconnect/... and that a shared memory supports a single writer with multiple readers.
  .
  This package contains the binary shared libraries.
 
@@ -59,11 +51,7 @@ Architecture: all
 Recommends: libshmdata-1.0-dev
 Depends:
  ${misc:Depends}
-Description: Library to share flows of data frames between processes via shared memory. 
-shmdata can be compared to the JACK audio connection kit project or to the
-VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). 
-Note that shmdata followers and writers can hot connect/disconnect/reconnect/... 
-and that a shared memory supports a single writer with multiple readers.
+Description: Library to share flows of data frames between processes via shared memory. shmdata can be compared to the JACK audio connection kit project or to the VideoJack project. shmdata, however, does not provide a host server and require applications to link data streams using socket path (e.g. "/tmp/my_shmdata_stream"). Note that shmdata followers and writers can hot connect/disconnect/reconnect/... and that a shared memory supports a single writer with multiple readers.
  .
  This package contains the documentation.
 
