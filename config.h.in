@@ -6,23 +6,14 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* Define to 1 if you have the <math.h> header file. */
-#undef HAVE_MATH_H
-
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 
 /* Apple Mac OS X operating system detected */
 #undef HAVE_OSX
 
-/* Define to 1 if you have the <signal.h> header file. */
-#undef HAVE_SIGNAL_H
-
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
-
-/* Define to 1 if you have the <stdio.h> header file. */
-#undef HAVE_STDIO_H
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #undef HAVE_STDLIB_H
@@ -32,6 +23,12 @@
 
 /* Define to 1 if you have the <string.h> header file. */
 #undef HAVE_STRING_H
+
+/* Define to 1 if you have the <sys/ipc.h> header file. */
+#undef HAVE_SYS_IPC_H
+
+/* Define to 1 if you have the <sys/shm.h> header file. */
+#undef HAVE_SYS_SHM_H
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
@@ -66,12 +63,6 @@
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
-
-/* GStreamer plugin path for element built */
-#undef SHMDATA_GST_PLUGIN_PATH
-
-/* Path where the shm elements have been built */
-#undef SHMDATA_SHM_GST_PLUGIN_BUILD_PATH
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
