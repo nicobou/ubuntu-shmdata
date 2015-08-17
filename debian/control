@@ -22,7 +22,7 @@ Vcs-Browser: http://code.sat.qc.ca/redmine/projects/libshmdata/repository
 
 Package: gstreamer1.0-shmdata-1.0
 Section: libs
-Architecture: all
+Architecture: any
 Provides: gstreamer1.0-shmdata
 Replaces: gstreamer1.0-shmdata
 Conflicts: gstreamer1.0-shmdata
